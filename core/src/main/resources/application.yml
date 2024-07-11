@@ -1,0 +1,27 @@
+micronaut:
+  application:
+    name: core
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+  security:
+    authentication: bearer
+datasources:
+  default:
+    url: 'jdbc:postgresql://localhost:5432/key_keeper'
+    username: 'postgres'
+    password: 'postgres'
+    driverClassName: 'org.postgresql.Driver'
+jpa:
+  default:
+    packages-to-scan:
+      - 'github.sagubr'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update

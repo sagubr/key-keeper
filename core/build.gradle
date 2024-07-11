@@ -1,23 +1,37 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.4.0"
+    id("io.micronaut.test-resources") version "4.4.0"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
     id("io.micronaut.aot") version "4.4.0"
 }
 
 version = "0.1"
 group = "github.sagubr"
 
+apply from: "gradle/asciidoc.gradle"
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     compileOnly("io.micronaut:micronaut-http-client")
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
+    aotPlugins platform("io.micronaut.platform:micronaut-platform:4.5.0")
+    aotPlugins("io.micronaut.security:micronaut-security-aot")
 }
 
 
@@ -39,8 +53,8 @@ micronaut {
         annotations("github.sagubr.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+    // Please review carefully the optimizations enabled below
+    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
@@ -49,6 +63,7 @@ micronaut {
         deduceEnvironment = true
         optimizeNetty = true
         replaceLogbackXml = true
+        configurationProperties.put("micronaut.security.jwks.enabled","false")
     }
 }
 
