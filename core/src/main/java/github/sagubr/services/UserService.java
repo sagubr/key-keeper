@@ -8,25 +8,34 @@ import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Singleton
 public class UserService {
 
-    @Inject
-    private UserRepository userRepository;
+    private final UserRepository repository;
+    private final UserMapper mapper;
+    private final BCryptPasswordEncoderService passwordEncoder;
 
     @Inject
-    private UserMapper userMapper;
+    public UserService(UserRepository repository, UserMapper mapper, BCryptPasswordEncoderService passwordEncoder) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+    }
 
+    @Transactional(readOnly = true)
     public Optional<UserDto> findUser(String username) {
-        return userRepository.findByUsername(username).map(userMapper::toDto);
+        return Optional.of(repository.findByUsername(username)
+                        .orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found")))
+                .map(mapper::toDto);
     }
 
     @Transactional
-    public User save(User user) {
-        return userRepository.save(user);
+    public User save(UserDto user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return repository.save(mapper.toEntity(user));
     }
 }
 

@@ -1,7 +1,9 @@
 package github.sagubr.controller;
 
 import github.sagubr.entities.User;
+import github.sagubr.entities.dtos.UserDto;
 import github.sagubr.services.UserService;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
@@ -36,7 +38,7 @@ public class UserController {
     @Post(value = "/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Status(HttpStatus.CREATED)
-    public User save(@Body @Valid User user) {
-        return userService.save(user);
+    public HttpResponse<User> save(@Body @Valid UserDto userDTO) {
+        return HttpResponse.ok(userService.save(userDTO));
     }
 }

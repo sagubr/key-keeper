@@ -1,10 +1,9 @@
 package github.sagubr.entities;
 
 public enum Roles {
-    BASIC,
+    VIEWER,
     EDITOR,
-    SUPERVISOR,
-    ADMIN,
+    MODERATOR,
     MANAGER,
     SUPER_ADMIN
 }
