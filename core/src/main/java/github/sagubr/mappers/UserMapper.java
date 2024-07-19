@@ -4,7 +4,6 @@ import github.sagubr.entities.User;
 import github.sagubr.entities.dtos.UserDto;
 import org.mapstruct.Mapper;
 import jakarta.inject.Singleton;
-import org.mapstruct.Mapping;
 
 @Singleton
 @Mapper(componentModel = "jsr330")

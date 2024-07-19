@@ -11,7 +11,6 @@ import io.micronaut.security.authentication.*;
 import io.micronaut.security.authentication.provider.HttpRequestAuthenticationProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.Optional;

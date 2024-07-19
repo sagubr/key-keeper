@@ -1,16 +1,14 @@
 package github.sagubr.entities;
 
-import io.micronaut.data.annotation.TypeDef;
-import io.micronaut.data.model.DataType;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email", name = "unique_email")
+        @UniqueConstraint(columnNames = "email", name = "unique_email"),
+        @UniqueConstraint(columnNames = "username", name = "unique_username")
 })
 @Serdeable
 public class User extends EntityPattern {
@@ -18,34 +16,20 @@ public class User extends EntityPattern {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    @TypeDef(type = DataType.JSON)
+    @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
 
     public User() {
-    }
-
-    public User(String username, String password, Set<Roles> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public User(String name, String username, String email, String password, Set<Roles> roles) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
     }
 
     public String getName() {

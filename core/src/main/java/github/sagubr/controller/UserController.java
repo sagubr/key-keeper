@@ -16,18 +16,29 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 
 import java.security.Principal;
+import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/users")
 public class UserController {
 
-    @Inject
-    UserService userService;
+    private final UserService service;
 
-    @Produces(MediaType.TEXT_PLAIN)
+    @Inject
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
+    @Operation(summary = "Get All Users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "500", description = "Error"),
+    })
     @Get
-    public String index(Principal principal) {
-        return principal.getName();
+    @Produces(MediaType.APPLICATION_JSON)
+    @Status(HttpStatus.ACCEPTED)
+    public List<User> getAllUsers() {
+        return service.findAll();
     }
 
     @Operation(summary = "Create new user")
@@ -38,7 +49,7 @@ public class UserController {
     @Post(value = "/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Status(HttpStatus.CREATED)
-    public HttpResponse<User> save(@Body @Valid UserDto userDTO) {
-        return HttpResponse.ok(userService.save(userDTO));
+    public User save(@Body @Valid UserDto userDTO) {
+        return service.save(userDTO);
     }
 }

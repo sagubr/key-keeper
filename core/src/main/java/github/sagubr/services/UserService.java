@@ -8,6 +8,7 @@ import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,6 +24,11 @@ public class UserService {
         this.repository = repository;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Transactional
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
     @Transactional(readOnly = true)

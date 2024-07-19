@@ -18,7 +18,6 @@ public class UserDto {
     private String username;
     private Set<Roles> roles;
 
-
     public UserDto(String username, String password, Set<Roles> roles) {
         this.password = password;
         this.roles = roles;

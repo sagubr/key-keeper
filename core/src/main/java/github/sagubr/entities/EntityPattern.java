@@ -24,15 +24,26 @@ public abstract class EntityPattern {
     private boolean active = true;
 
     @DateCreated
-    @Column(updatable = false)
+    @Column(nullable = false, updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @DateUpdated
+    @Column(nullable = true)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     public UUID getId() {
-        return id;
+        return this.id;
     }
 }
