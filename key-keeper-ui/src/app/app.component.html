@@ -1,6 +1,6 @@
 <div class="example-container">
 
-    <mat-toolbar>
+    <mat-toolbar style="background: #080A0B;">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
         <span>Key Keeper</span>
         <span class="example-spacer"></span>
@@ -17,7 +17,7 @@
 
     <mat-sidenav-container class="sidenav-container">
 
-        <mat-sidenav #snav [mode]="'side'" fixedTopGap="56">
+        <mat-sidenav #snav [mode]="'side'" fixedTopGap="56" style="background: #080A0B;">
             <mat-nav-list *ngFor="let option of menuOptions">
                 <a mat-list-item [routerLink]="'${option.route}'"
                     routerLinkActive="active"><mat-icon>{{option.icon}}</mat-icon></a>
