@@ -1,2 +1,35 @@
+<div class="example-container">
 
-<app-sidenav></app-sidenav>
+    <mat-toolbar>
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <span>Key Keeper</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+            <mat-icon>notifications</mat-icon>
+        </button>
+        <span>
+            Gustavo Garcia
+        </span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+            <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container">
+
+        <mat-sidenav #snav [mode]="'side'" fixedTopGap="56">
+            <mat-nav-list *ngFor="let option of menuOptions">
+                <a mat-list-item [routerLink]="'${option.route}'"
+                    routerLinkActive="active"><mat-icon>{{option.icon}}</mat-icon></a>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <div class="container">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+
+</div>

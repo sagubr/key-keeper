@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { MENU_OPTIONS } from './configurations/options';
+import { MenuOptions } from './configurations/options.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'key-keeper-ui';
+  menuOptions: MenuOptions[] = MENU_OPTIONS;
 }
