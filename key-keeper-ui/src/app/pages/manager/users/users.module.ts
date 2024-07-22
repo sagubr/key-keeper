@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UsersComponent } from './users.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { UsersDatatableModule } from './users-datatable/users-datatable.module';
+import { UsersFiltersModule } from './users-filters/users-filters.module';
 
 const routes: Routes = [{ path: '', component: UsersComponent }];
 
@@ -14,10 +12,8 @@ const routes: Routes = [{ path: '', component: UsersComponent }];
   declarations: [UsersComponent],
   imports: [
     CommonModule,
-    SharedModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
+    UsersFiltersModule,
+    UsersDatatableModule,
 
     RouterModule.forChild(routes),
   ],

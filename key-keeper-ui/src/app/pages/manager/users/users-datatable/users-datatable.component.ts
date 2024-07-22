@@ -1,22 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-@Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
-})
-export class UsersComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-}
 
 export interface PeriodicElement {
   name: string;
@@ -47,3 +31,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
   { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
 ];
+
+@Component({
+  selector: 'app-users-datatable',
+  templateUrl: './users-datatable.component.html',
+  styleUrls: ['./users-datatable.component.scss'],
+})
+export class UsersDatatableComponent implements AfterViewInit {
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+}

@@ -1,0 +1,25 @@
+<app-toolbar-header [title]="'Gerenciamento de Registros'"></app-toolbar-header>
+
+<div class="content mat-elevation-z4">
+    <mat-tab-group>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">people</mat-icon>
+                Usuários
+            </ng-template>
+            <mat-progress-bar mode="query"></mat-progress-bar>
+            <app-users></app-users>
+
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">room_preferences</mat-icon>
+                Salas
+            </ng-template>
+            Content 2
+        </mat-tab>
+
+    </mat-tab-group>
+</div>

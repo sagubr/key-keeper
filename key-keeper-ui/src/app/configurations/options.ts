@@ -22,8 +22,8 @@ export const MENU_OPTIONS: MenuOptions[] = [
     route: '.',
   },
   {
-    title: 'Usuários',
-    icon: 'people',
-    route: 'users',
+    title: 'Gerenciar',
+    icon: 'group_add',
+    route: 'manager',
   },
 ];
