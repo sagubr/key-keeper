@@ -38,7 +38,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./users-datatable.component.scss'],
 })
 export class UsersDatatableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'star'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

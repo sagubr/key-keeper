@@ -9,4 +9,6 @@ import { MenuOptions } from './configurations/options.model';
 })
 export class AppComponent {
   menuOptions: MenuOptions[] = MENU_OPTIONS;
+
+  constructor() {console.log(this.menuOptions)}
 }

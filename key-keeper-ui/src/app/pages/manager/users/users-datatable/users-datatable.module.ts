@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [UsersDatatableComponent],
@@ -15,6 +16,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatPaginatorModule,
     MatProgressBarModule,
     MatButtonModule,
+    MatIconModule,
   ],
   exports: [UsersDatatableComponent],
 })

@@ -1,7 +1,14 @@
-<div>
-    <form>
-        <mat-form-field>
-            <mat-label>Favorite food</mat-label>
+<div class="toolbar">
+    <form class="toolbar-form">
+
+        <mat-form-field class="spacer">
+            <mat-label>Buscar</mat-label>
+            <input matInput placeholder="Pesquisar usuários...">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field class="spacer">
+            <mat-label>Ativos</mat-label>
             <mat-select name="food">
                 <mat-option *ngFor="let food of foods" [value]="food.value">
                     {{food.viewValue}}
@@ -9,8 +16,8 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Favorite food</mat-label>
+        <mat-form-field class="spacer">
+            <mat-label>Ordenar por</mat-label>
             <mat-select name="food">
                 <mat-option *ngFor="let food of foods" [value]="food.value">
                     {{food.viewValue}}
@@ -18,12 +25,9 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-            <mat-label>Favorite food</mat-label>
-            <input matInput placeholder="Ex. Pizza" value="Sushi">
-        </mat-form-field>
     </form>
-    <button mat-icon-button aria-label="Example icon-button with custom icon">
+    <button mat-raised-button color="primary" aria-label="Adicionar">
         <mat-icon>add_circle</mat-icon>
+        Adicionar
     </button>
 </div>
