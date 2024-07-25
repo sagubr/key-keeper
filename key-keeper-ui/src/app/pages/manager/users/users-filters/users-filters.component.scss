@@ -3,14 +3,23 @@
   align-items: center;
 }
 
+
+
 .toolbar-form {
   display: flex;
-  flex-grow: 1;
   align-items: center;
+}
+
+.input{
+  height: 50px;
 }
 
 .toolbar-form .spacer {
   margin-right: 16px;
   margin-top: 16px;
+}
+
+.button {
+  height: 50px;
 }
 

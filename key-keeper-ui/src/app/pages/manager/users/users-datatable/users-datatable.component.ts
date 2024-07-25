@@ -8,15 +8,15 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./users-datatable.component.scss'],
 })
 export class UsersDatatableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'star'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'star'];
+  pageSizeOptions = [5, 10, 20, 50, 100];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
 }
 
 export interface PeriodicElement {
