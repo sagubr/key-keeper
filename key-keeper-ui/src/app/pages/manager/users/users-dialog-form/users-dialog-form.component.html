@@ -1,45 +1,76 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<h1 mat-dialog-title>Cadastrar Usuário</h1>
 
 <div class="form-container">
-  <div mat-dialog-content>
-    <div class="row">
-      <mat-form-field class="full-width">
-        <mat-label>Nome Completo</mat-label>
-        <input matInput>
-      </mat-form-field>
-    </div>
+  <form [formGroup]="form">
+    <div mat-dialog-content>
+      <div class="row">
+        <mat-form-field class="full-width">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="name">
+          <mat-error *ngIf="form.get('name')?.invalid">Nome é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="row">
-      <mat-form-field class="col">
-        <mat-label>Username</mat-label>
-        <input matInput>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput placeholder="Ex. pat@example.com">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <div class="row two-columns">
+        <mat-form-field class="half-width">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="nome.sobrenome" formControlName="username">
+          <mat-error *ngIf="form.get('username')?.invalid">Usuário é obrigatório</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email" required>
+          <mat-error *ngIf="form.get('email')?.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row two-columns">
+        <mat-form-field class="half-width">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.invalid">Senha é obrigatória</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Confirmar Senha</mat-label>
+          <input matInput formControlName="repeatPassword" [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="row two-columns">
+        <mat-form-field class="full-width">
+          <mat-label>Roles</mat-label>
+          <mat-select formControlName="roles">
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div>
+          <mat-label>Ativo</mat-label>
+
+          <mat-radio-group class="full-width" formControlName=" active">
+            <mat-radio-button class="example-margin" value="after">After</mat-radio-button>
+            <mat-radio-button class="example-margin" value="before">Before</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <mat-form-field>
-        <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-      <mat-form-field class="col">
-        <mat-label>Confirmar Senha</mat-label>
-        <input matInput>
-      </mat-form-field>
-    </div>
-  </div>
+  </form>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onNoClick()">No Thanks</button>
+  <button mat-flat-button [disabled]="!form.valid">Post</button>
 </div>

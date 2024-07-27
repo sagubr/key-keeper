@@ -1,9 +1,10 @@
 <div class="toolbar">
+
     <form class="toolbar-form">
 
         <mat-form-field class="spacer">
             <mat-label>Buscar</mat-label>
-            <input matInput class="input" placeholder="Pesquisar usuários...">
+            <input class="input" matInput (keyup)="onSearch($event)" placeholder="Pesquisar usuários...">
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
@@ -26,6 +27,7 @@
         </mat-form-field>
 
     </form>
+
     <button mat-raised-button class="button" aria-label="Adicionar" (click)="openDialog()">
         <mat-icon>add_circle</mat-icon>
         Adicionar

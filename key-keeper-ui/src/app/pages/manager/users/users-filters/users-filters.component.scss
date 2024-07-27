@@ -1,25 +1,39 @@
+$marginSize: 16px;
+
 .toolbar {
+  margin-top: $marginSize;
   display: flex;
   align-items: center;
 }
-
-
 
 .toolbar-form {
   display: flex;
   align-items: center;
-}
 
-.input{
-  height: 50px;
 }
 
 .toolbar-form .spacer {
-  margin-right: 16px;
-  margin-top: 16px;
+  margin-right: $marginSize;
+}
+
+.mat-form-field {
+  flex: 1;
+  min-width: 150px;
+  margin: 8px;
 }
 
 .button {
-  height: 50px;
+  margin: 8px;
 }
 
+@media (max-width: 600px) {
+  .mat-form-field {
+    flex-basis: 100%;
+    margin: 4px 0;
+  }
+
+  .button {
+    width: 100%;
+    margin: 8px 0;
+  }
+}

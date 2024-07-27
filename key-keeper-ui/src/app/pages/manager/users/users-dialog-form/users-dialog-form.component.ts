@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -8,8 +8,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./users-dialog-form.component.scss'],
 })
 export class UsersDialogFormComponent {
-
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+    repeatPassword: new FormControl('', [Validators.required]),
+    roles: new FormControl('', [Validators.required]),
+    active: new FormControl(true),
+  });
 
   hide = true;
 
@@ -22,6 +30,13 @@ export class UsersDialogFormComponent {
     this.dialogRef.close();
   }
 
+  getErrorMessage() {
+    if (this.form.get('email')?.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.form.get('email')?.hasError('email') ? 'Not a valid email' : '';
+  }
 }
 
 export interface DialogData {

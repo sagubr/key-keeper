@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-users',
@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class UsersComponent {
 
+  filter?: EventEmitter<String>;
 }

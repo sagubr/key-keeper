@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UsersDialogFormComponent } from '../users-dialog-form/users-dialog-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { UserFilterService } from './user-filters.service';
 
 export interface Food {
   value: string;
@@ -22,7 +24,9 @@ export class UsersFiltersComponent {
   animal: string = '';
   name: string = '';
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+    private filterService: UserFilterService
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UsersDialogFormComponent, {
@@ -33,5 +37,11 @@ export class UsersFiltersComponent {
       console.log('The dialog was closed');
       this.animal = result;
     });
+  }
+
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    console.log(`filter by: ${value}`);
+    this.filterService.setFilter(value);
   }
 }
