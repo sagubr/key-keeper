@@ -1,39 +1,34 @@
-$marginSize: 16px;
-
 .toolbar {
-  margin-top: $marginSize;
+  margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 .toolbar-form {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-
+  flex: 1;
 }
 
 .toolbar-form .spacer {
-  margin-right: $marginSize;
-}
-
-.mat-form-field {
-  flex: 1;
+  margin: 8px;
   min-width: 150px;
-  margin: 8px;
 }
 
-.button {
-  margin: 8px;
+.button-add {
+  height: 56px;
+  margin-left: 8px;
+  margin-bottom: 4px;
 }
 
 @media (max-width: 600px) {
-  .mat-form-field {
-    flex-basis: 100%;
-    margin: 4px 0;
+  .toolbar-form {
+    flex-direction: column;
+    align-items: stretch; 
   }
 
-  .button {
-    width: 100%;
-    margin: 8px 0;
+  .button-add {
+    margin: 8px 8px;
   }
 }

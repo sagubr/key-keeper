@@ -1,76 +1,83 @@
-<h1 mat-dialog-title>Cadastrar Usuário</h1>
+<div class="container">
 
-<div class="form-container">
-  <form [formGroup]="form">
-    <div mat-dialog-content>
+  <div class="dialog-header">
+    <h1 mat-dialog-title class="title">Cadastrar Usuário</h1>
+    <button mat-icon-button (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <form [formGroup]="form">
+
+      <h2 class="subtitle">Informações Pessoais</h2>
       <div class="row">
-        <mat-form-field class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nome Completo</mat-label>
-          <input matInput formControlName="name">
-          <mat-error *ngIf="form.get('name')?.invalid">Nome é obrigatório</mat-error>
+          <input matInput maxlength="256" formControlName="name">
+          <mat-error *ngIf="form.get('name')?.invalid">Você deve inserir um valor</mat-error>
         </mat-form-field>
       </div>
 
-      <div class="row two-columns">
-        <mat-form-field class="half-width">
-          <mat-label>Username</mat-label>
-          <input matInput placeholder="nome.sobrenome" formControlName="username">
-          <mat-error *ngIf="form.get('username')?.invalid">Usuário é obrigatório</mat-error>
-        </mat-form-field>
-
-
-        <mat-form-field class="full-width">
-          <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="pat@example.com" formControlName="email" required>
+      <div class="row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="email@example.com" maxlength="256" formControlName="email" required>
           <mat-error *ngIf="form.get('email')?.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
+      </div>
+
+      <h2 class="subtitle">Autenticação</h2>
+
+      <div class="row two-columns">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Nome de usuário</mat-label>
+          <input matInput formControlName="username" maxlength="256" appNoWhiteSpace>
+          <button mat-icon-button matSuffix [cdkCopyToClipboard]="form.get('username')?.value ?? ''">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('username')?.invalid">Você deve inserir um valor</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Atribuição</mat-label>
+          <mat-select formControlName="roles">
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('roles')?.invalid">Você deve inserir um valor</mat-error>
+        </mat-form-field>
 
       </div>
 
       <div class="row two-columns">
-        <mat-form-field class="half-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Senha</mat-label>
           <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
             [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-error *ngIf="form.get('password')?.invalid">Senha é obrigatória</mat-error>
+          <mat-hint align="end">{{form.get('password')?.value?.length}} dígitos</mat-hint>
+          <mat-error *ngIf="form.get('password')?.invalid">Você deve inserir um valor</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="half-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Confirmar Senha</mat-label>
           <input matInput formControlName="repeatPassword" [type]="hide ? 'password' : 'text'">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Exibir senha'"
             [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
+          <mat-hint align="end">{{form.get('repeatPassword')?.value?.length}} dígitos</mat-hint>
+          <mat-error *ngIf="checkPasswords()">As senhas não são equivalentes</mat-error>
         </mat-form-field>
       </div>
+    </form>
+  </div>
 
-      <div class="row two-columns">
-        <mat-form-field class="full-width">
-          <mat-label>Roles</mat-label>
-          <mat-select formControlName="roles">
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div>
-          <mat-label>Ativo</mat-label>
-
-          <mat-radio-group class="full-width" formControlName=" active">
-            <mat-radio-button class="example-margin" value="after">After</mat-radio-button>
-            <mat-radio-button class="example-margin" value="before">Before</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
-
-<div mat-dialog-actions align="end">
-  <button mat-stroked-button (click)="onNoClick()">No Thanks</button>
-  <button mat-flat-button [disabled]="!form.valid">Post</button>
+  <div mat-dialog-actions align="end" class="dialog-footer">
+    <button mat-stroked-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button [disabled]="form.invalid" color="primary">Post</button>
+  </div>
 </div>

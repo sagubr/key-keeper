@@ -8,11 +8,12 @@ import { ToolbarHeaderModule } from '../../shared/components/toolbar-header/tool
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RoomsComponent } from './rooms/rooms.component';
 
 const routes: Routes = [{ path: '', component: ManagerComponent }];
 
 @NgModule({
-  declarations: [ManagerComponent],
+  declarations: [ManagerComponent, RoomsComponent],
   imports: [
     CommonModule,
     UsersModule,

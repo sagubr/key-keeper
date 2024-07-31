@@ -10,10 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { UsersDialogFormComponent } from './users-dialog-form.component';
+import { UsersDialogPasswordFormComponent } from './users-dialog-password-form.component';
 
 @NgModule({
-  declarations: [UsersDialogFormComponent],
+  declarations: [UsersDialogPasswordFormComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -26,6 +26,6 @@ import { UsersDialogFormComponent } from './users-dialog-form.component';
     MatDialogModule,
     ClipboardModule,
   ],
-  exports: [UsersDialogFormComponent],
+  exports: [UsersDialogPasswordFormComponent],
 })
-export class UsersDialogFormModule {}
+export class UsersDialogPasswordFormModule {}

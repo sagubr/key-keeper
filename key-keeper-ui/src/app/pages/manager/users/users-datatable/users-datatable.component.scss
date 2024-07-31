@@ -4,6 +4,19 @@
   overflow: auto;
 }
 
+.mat-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper {
+  min-width: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .paginator {
   border-radius: 10px;
 }
@@ -20,6 +33,6 @@
   font-weight: bold;
 }
 
-.full-width {
-  width: 100%;
-}
+
+
+

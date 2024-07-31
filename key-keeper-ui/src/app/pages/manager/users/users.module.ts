@@ -5,6 +5,7 @@ import { UsersComponent } from './users.component';
 import { UsersDatatableModule } from './users-datatable/users-datatable.module';
 import { UsersFiltersModule } from './users-filters/users-filters.module';
 import { UsersDialogFormModule } from './users-dialog-form/users-dialog-form.module';
+import { UsersDialogPasswordFormModule } from './users-dialog-password-form/user-dialog-password-form.module';
 
 @NgModule({
   declarations: [UsersComponent],
@@ -13,6 +14,7 @@ import { UsersDialogFormModule } from './users-dialog-form/users-dialog-form.mod
     UsersFiltersModule,
     UsersDatatableModule,
     UsersDialogFormModule,
+    UsersDialogPasswordFormModule,
   ],
   exports: [UsersComponent],
 })

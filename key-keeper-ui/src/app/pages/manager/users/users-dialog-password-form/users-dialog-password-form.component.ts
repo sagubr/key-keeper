@@ -1,27 +1,23 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DialogData } from '../users-dialog-form/users-dialog-form.component';
 
 @Component({
-  selector: 'app-users-dialog-form',
-  templateUrl: './users-dialog-form.component.html',
-  styleUrls: ['./users-dialog-form.component.scss'],
+  selector: 'app-users-dialog-password-form',
+  templateUrl: './users-dialog-password-form.component.html',
+  styleUrls: ['./users-dialog-password-form.component.scss']
 })
-export class UsersDialogFormComponent {
+export class UsersDialogPasswordFormComponent {
   form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required]),
-    roles: new FormControl('', [Validators.required]),
-    active: new FormControl(true),
   });
 
   hide = true;
 
   constructor(
-    public dialogRef: MatDialogRef<UsersDialogFormComponent>,
+    public dialogRef: MatDialogRef<UsersDialogPasswordFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
@@ -44,9 +40,4 @@ export class UsersDialogFormComponent {
     console.log(!(password === repeatPassword));
     return !(password === repeatPassword);
   }
-}
-
-export interface DialogData {
-  animal: string;
-  name: string;
 }
