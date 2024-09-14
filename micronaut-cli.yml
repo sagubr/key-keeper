@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: github.sagubr
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [ app-name, asciidoctor, gradle, http-client-test, java, java-application, jdbc-hikari, junit, liquibase, logback, lombok, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, openapi, postgres, properties, readme, security-annotations, security-jwt, serialization-jackson, shade, static-resources, swagger-ui, test-resources ]
