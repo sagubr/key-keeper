@@ -1,5 +1,6 @@
 package github.sagubr.controller;
 
+import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.User;
 import github.sagubr.entities.dtos.UserDto;
 import github.sagubr.services.UserService;
@@ -32,10 +33,7 @@ public class UserController {
     }
 
     @Operation(summary = "Get All Users")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "500", description = "Error"),
-    })
+    @DefaultResponses
     @Get
     @Produces(MediaType.APPLICATION_JSON)
     @Status(HttpStatus.ACCEPTED)
@@ -44,10 +42,7 @@ public class UserController {
     }
 
     @Operation(summary = "Create new user")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "500", description = "Error"),
-    })
+    @DefaultResponses
     @Post(value = "/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Status(HttpStatus.CREATED)
