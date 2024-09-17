@@ -15,38 +15,42 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.projectlombok:lombok")
-    annotationProcessor("io.micronaut:micronaut-http-validation")
-    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
-    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
-    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    /* Data */
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
 
-    implementation("io.micronaut.liquibase:micronaut-liquibase")
-    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    /* Openapi */
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+
+    /*Lombok */
+    compileOnly ("org.projectlombok:lombok:1.18.34")
+    annotationProcessor ("org.projectlombok:lombok:1.18.34")
+    testCompileOnly ("org.projectlombok:lombok:1.18.34")
+    testAnnotationProcessor ("org.projectlombok:lombok:1.18.34")
+
+    /*Security */
     implementation("io.micronaut.security:micronaut-security-jwt")
     implementation ("org.springframework.security:spring-security-core:6.3.1")
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    aotPlugins("io.micronaut.security:micronaut-security-aot")
 
-    implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-
-    /* Mapstruct Region */
+    /* Mapstruct */
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-    /* Mapstruct END Region */
 
+    /* Http */
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
     compileOnly("io.micronaut:micronaut-http-client")
-    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
-    compileOnly("org.projectlombok:lombok")
+    testImplementation("io.micronaut:micronaut-http-client")
+    annotationProcessor("io.micronaut:micronaut-http-validation")
 
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
-
-    testImplementation("io.micronaut:micronaut-http-client")
-
-    aotPlugins platform("io.micronaut.platform:micronaut-platform:4.6.2")
-    aotPlugins("io.micronaut.security:micronaut-security-aot")
+    aotPlugins platform("io.micronaut.platform:micronaut-platform:4.5.0")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
 }
 
 application {
