@@ -47,3 +47,9 @@ jpa:
             hibernate:
                 hbm2ddl:
                     auto: update
+                show_sql: true
+liquibase:
+    enabled: true
+    datasources:
+        default:
+            change-log: 'classpath:db/liquibase-changelog.xml'
