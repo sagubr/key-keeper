@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.DateUpdated;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class EntityPattern {
 
@@ -28,7 +32,7 @@ public abstract class EntityPattern {
     private LocalDateTime createdAt;
 
     @DateUpdated
-    @Column(nullable = true)
+    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
@@ -42,23 +46,4 @@ public abstract class EntityPattern {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public UUID getId() {
-        return this.id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 }
