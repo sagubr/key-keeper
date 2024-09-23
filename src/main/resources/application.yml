@@ -10,6 +10,7 @@ micronaut:
                 paths: classpath:META-INF/swagger/views/swagger-ui
                 mapping: /swagger-ui/**
     security:
+        enabled: true
         authentication: bearer
         token:
             jwt:
@@ -35,10 +36,10 @@ micronaut:
 
 datasources:
     default:
-        url: 'jdbc:postgresql://localhost:5432/key_keeper'
-        username: 'postgres'
-        password: 'postgres'
-        driverClassName: 'org.postgresql.Driver'
+        url: ${DEFAULT_DB_URL:`jdbc:postgresql://localhost:5432/key_keeper`}
+        username: ${DEFAULT_DB_USERNAME:`postgres`}
+        password: ${DEFAULT_DB_PASSWORD:`postgres`}
+        driverClassName: org.postgresql.Driver
 jpa:
     default:
         packages-to-scan:
