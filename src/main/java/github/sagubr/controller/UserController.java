@@ -16,36 +16,29 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Users", description = "Operations related to user management")
+@Tag(name = "Users", description = "Operações relacionadas a entidade Usuário")
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Controller("/api/users")
 public class UserController {
 
     private final UserService service;
 
-    @Inject
-    public UserController(UserService service) {
-        this.service = service;
-    }
-
-    @Operation(summary = "Get All Users")
+    @Operation(summary = "Obter todos os usuários")
     @DefaultResponses
     @Get
-    @Produces(MediaType.APPLICATION_JSON)
-    @Status(HttpStatus.ACCEPTED)
     public List<User> getAllUsers() {
         return service.findAll();
     }
 
-    @Operation(summary = "Create new user")
+    @Operation(summary = "Criar novo usuário")
     @DefaultResponses
     @Post(value = "/save")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Status(HttpStatus.CREATED)
     public User save(@Body @Valid UserDto userDTO) {
         return service.save(userDTO);
     }

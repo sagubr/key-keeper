@@ -7,24 +7,19 @@ import github.sagubr.repositories.UserRepository;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Singleton
+@AllArgsConstructor(onConstructor = @__(@Inject))
 public class UserService {
 
     private final UserRepository repository;
     private final UserMapper mapper;
     private final BCryptPasswordEncoderService passwordEncoder;
-
-    @Inject
-    public UserService(UserRepository repository, UserMapper mapper, BCryptPasswordEncoderService passwordEncoder) {
-        this.repository = repository;
-        this.mapper = mapper;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Transactional
     public List<User> findAll() {
