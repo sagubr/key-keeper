@@ -1,29 +1,35 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.User;
-import github.sagubr.entities.dtos.UserDto;
+import github.sagubr.model.UserDto;
 import github.sagubr.mappers.UserMapper;
 import github.sagubr.repositories.UserRepository;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
-@AllArgsConstructor(onConstructor = @__(@Inject))
-public class UserService {
+public class UserService extends GenericService<User, UUID> {
 
     private final UserRepository repository;
     private final UserMapper mapper;
     private final BCryptPasswordEncoderService passwordEncoder;
 
-    @Transactional
-    public List<User> findAll() {
-        return repository.findAll();
+    @Inject
+    public UserService(
+            UserRepository repository,
+            UserMapper mapper,
+            BCryptPasswordEncoderService passwordEncoder
+    ) {
+        super(repository);
+        this.repository = repository;
+        this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -34,7 +40,7 @@ public class UserService {
     }
 
     @Transactional
-    public User save(UserDto user) {
+    public User save(@NotNull UserDto user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(mapper.toEntity(user));
     }

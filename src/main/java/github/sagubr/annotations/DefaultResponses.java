@@ -16,11 +16,11 @@ import static java.lang.annotation.ElementType.METHOD;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Operacao bem sucedida"),
-        @ApiResponse(responseCode = "401", description = "Falha de autenticacao"),
-        @ApiResponse(responseCode = "403", description = "Acesso negado"),
+        @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
+        @ApiResponse(responseCode = "401", description = "Falha de autenticação"),
+        @ApiResponse(responseCode = "403", description = "Acesso não autorizado"),
         @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-        @ApiResponse(responseCode = "422", description = "Erro de validacao",
+        @ApiResponse(responseCode = "422", description = "Erro de validação",
                 content = {
                         @Content(mediaType = "application/json", schema = @Schema())
                 }

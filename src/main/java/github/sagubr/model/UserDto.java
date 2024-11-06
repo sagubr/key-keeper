@@ -1,4 +1,4 @@
-package github.sagubr.entities.dtos;
+package github.sagubr.model;
 
 import github.sagubr.entities.Roles;
 import io.micronaut.serde.annotation.Serdeable;
@@ -18,9 +18,9 @@ public class UserDto {
     private String name;
     private String password;
     private String username;
-    private Set<Roles> roles;
+    private Roles roles;
 
-    public UserDto(String username, String password, Set<Roles> roles) {
+    public UserDto(String username, String password, Roles roles) {
         this.password = password;
         this.roles = roles;
         this.username = username;

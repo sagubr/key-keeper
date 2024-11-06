@@ -2,21 +2,15 @@ package github.sagubr.services;
 
 import github.sagubr.entities.Permission;
 import github.sagubr.repositories.PermissionRepository;
-import io.micronaut.transaction.annotation.Transactional;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor(onConstructor = @__(@Inject))
 @Singleton
-public class PermissionService {
+@SuperBuilder
+public class PermissionService extends GenericService<Permission, UUID>  {
 
     private final PermissionRepository repository;
 
-    @Transactional
-    public List<Permission> findAll() {
-        return repository.findAll();
-    }
 }

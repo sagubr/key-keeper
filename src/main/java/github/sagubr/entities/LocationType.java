@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,12 +14,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "positions", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name", name = "unique_name"),
+@Table(name = "locations_type", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "name", name = "unique_name")
 })
 @Serdeable
-public class Position extends EntityPattern {
+public class LocationType extends EntityPattern {
 
-    @Column(nullable = false, unique = true)
+    @NotNull
     private String name;
 }

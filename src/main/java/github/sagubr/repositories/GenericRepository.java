@@ -2,7 +2,6 @@ package github.sagubr.repositories;
 
 import io.micronaut.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
+public interface GenericRepository<T, UUID> extends JpaRepository<T, UUID> {
 
-public interface PatternRepository<T> extends JpaRepository<T, UUID> {
 }

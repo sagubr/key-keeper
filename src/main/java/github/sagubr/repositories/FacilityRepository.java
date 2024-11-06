@@ -1,10 +1,10 @@
 package github.sagubr.repositories;
 
-import github.sagubr.entities.Requester;
+import github.sagubr.entities.Facility;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.data.annotation.Repository;
 
 @Introspected
 @Repository
-public interface RequesterRepository extends GenericRepository<Requester, java.util.UUID> {
+public interface FacilityRepository extends GenericRepository<Facility, java.util.UUID> {
 }

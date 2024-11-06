@@ -2,6 +2,7 @@ package github.sagubr.entities;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,21 +20,21 @@ import java.util.Set;
 @Serdeable
 public class User extends EntityPattern {
 
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @NotNull
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @NotNull
     private String email;
 
-    @Column(nullable = false)
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
     @Enumerated(EnumType.STRING)
-    private Set<Roles> roles;
+    private Roles roles;
 
 }
 

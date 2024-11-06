@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Introspected
 @Repository
-public interface UserRepository extends PatternRepository<User> {
+public interface UserRepository extends GenericRepository<User, java.util.UUID> {
 
     Optional<User> findByUsername(String username);
 }

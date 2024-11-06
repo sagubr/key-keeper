@@ -1,8 +1,8 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
-import github.sagubr.entities.Place;
-import github.sagubr.services.PlaceService;
+import github.sagubr.entities.Facility;
+import github.sagubr.services.LocationService;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.security.annotation.Secured;
@@ -15,17 +15,11 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Places", description = "Operações relacionadas a entidade lugar")
+@Tag(name = "Facility", description = "Operações relacionadas a entidade lugar")
 @AllArgsConstructor(onConstructor = @__(@Inject))
-@Controller("/api/places")
-public class PlaceController {
+@Controller("/api/facility")
+public class FacilityController {
 
-    private final PlaceService service;
+    private final LocationService service;
 
-    @Operation(summary = "Obter todos os lugares")
-    @DefaultResponses
-    @Get
-    public List<Place> getAllPlaces() {
-        return service.findAll();
-    }
 }

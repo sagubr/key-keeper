@@ -1,8 +1,8 @@
 package github.sagubr.services;
 
-import github.sagubr.entities.Key;
+import github.sagubr.entities.JobTitle;
 import github.sagubr.entities.User;
-import github.sagubr.repositories.KeyRepository;
+import github.sagubr.repositories.JobTitleRepository;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -14,8 +14,8 @@ import java.util.UUID;
 
 @Singleton
 @SuperBuilder
-public class KeyService extends GenericService<Key, UUID> {
+public class JobTitleService extends GenericService<JobTitle, UUID> {
 
-    private final KeyRepository repository;
+    private final JobTitleRepository repository;
 
 }

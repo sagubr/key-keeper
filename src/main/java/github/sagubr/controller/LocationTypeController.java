@@ -1,8 +1,8 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
-import github.sagubr.entities.Environment;
-import github.sagubr.services.EnvironmentService;
+import github.sagubr.entities.LocationType;
+import github.sagubr.services.LocationTypeService;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.security.annotation.Secured;
@@ -15,17 +15,17 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Environment", description = "Operações relacionadas a entidade Ambiente")
+@Tag(name = "LocationType", description = "Operações relacionadas a entidade Tipos de Ambiente")
 @AllArgsConstructor(onConstructor = @__(@Inject))
-@Controller("/api/environment")
-public class EnvironmentController {
+@Controller("/api/location-type")
+public class LocationTypeController {
 
-    private final EnvironmentService service;
+    private final LocationTypeService service;
 
-    @Operation(summary = "Obter todos os ambientes")
+    @Operation(summary = "Obter todos os tipos de ambiente")
     @DefaultResponses
     @Get
-    public List<Environment> getAllEnvironments() {
+    public List<LocationType> getAllTypeEnvironments() {
         return service.findAll();
     }
 }

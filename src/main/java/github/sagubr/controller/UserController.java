@@ -2,24 +2,21 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.User;
-import github.sagubr.entities.dtos.UserDto;
+import github.sagubr.model.UserDto;
 import github.sagubr.services.UserService;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.HttpStatus;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "Users", description = "Operações relacionadas a entidade Usuário")
@@ -32,7 +29,7 @@ public class UserController {
     @Operation(summary = "Obter todos os usuários")
     @DefaultResponses
     @Get
-    public List<User> getAllUsers() {
+    public List<User> findAll() {
         return service.findAll();
     }
 

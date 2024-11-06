@@ -2,21 +2,15 @@ package github.sagubr.services;
 
 import github.sagubr.entities.Reservation;
 import github.sagubr.repositories.ReservationRepository;
-import io.micronaut.transaction.annotation.Transactional;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor(onConstructor = @__(@Inject))
 @Singleton
-public class ReservationService {
+@SuperBuilder
+public class ReservationService extends GenericService<Reservation, UUID> {
 
     private final ReservationRepository repository;
 
-    @Transactional
-    public List<Reservation> findAll() {
-        return repository.findAll();
-    }
 }

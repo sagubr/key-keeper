@@ -20,7 +20,6 @@ public abstract class EntityPattern {
     private UUID id;
 
     @Version
-    @Column(nullable = true)
     private Integer version;
 
     @Column(nullable = false)

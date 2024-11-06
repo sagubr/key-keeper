@@ -1,9 +1,9 @@
 package github.sagubr.services;
 
 import io.micronaut.core.annotation.NonNull;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Singleton
 public class BCryptPasswordEncoderService {

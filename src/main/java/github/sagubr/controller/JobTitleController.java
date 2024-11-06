@@ -1,9 +1,8 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
-import github.sagubr.entities.TypeEnvironment;
-import github.sagubr.entities.User;
-import github.sagubr.services.TypeEnvironmentService;
+import github.sagubr.entities.JobTitle;
+import github.sagubr.services.JobTitleService;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.security.annotation.Secured;
@@ -16,17 +15,17 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "TypeEnvironment", description = "Operações relacionadas a entidade Tipos de Ambiente")
+@Tag(name = "JobTitle", description = "Operações relacionadas a entidade cargo")
 @AllArgsConstructor(onConstructor = @__(@Inject))
-@Controller("/api/type-environments")
-public class TypeEnvironmentController {
+@Controller("/api/positions")
+public class JobTitleController {
 
-    private final TypeEnvironmentService service;
+    private final JobTitleService service;
 
-    @Operation(summary = "Obter todos os tipos de ambiente")
+    @Operation(summary = "Obter todos os cargos")
     @DefaultResponses
     @Get
-    public List<TypeEnvironment> getAllTypeEnvironments() {
+    public List<JobTitle> getAllPositions() {
         return service.findAll();
     }
 }

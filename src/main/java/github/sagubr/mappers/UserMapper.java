@@ -1,9 +1,9 @@
 package github.sagubr.mappers;
 
 import github.sagubr.entities.User;
-import github.sagubr.entities.dtos.UserDto;
-import org.mapstruct.Mapper;
+import github.sagubr.model.UserDto;
 import jakarta.inject.Singleton;
+import org.mapstruct.Mapper;
 
 @Singleton
 @Mapper(componentModel = "jsr330")

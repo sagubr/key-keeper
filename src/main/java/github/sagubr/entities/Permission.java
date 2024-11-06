@@ -4,6 +4,7 @@ package github.sagubr.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,39 +17,39 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "permissions")
 @Serdeable
-public class Permission extends EntityPattern{
+public class Permission extends EntityPattern {
 
+    @NotNull
     @ManyToOne
     @JoinColumn(
-            name = "environment_id",
-            foreignKey = @ForeignKey(name = "fk_permission_environment"),
-            nullable = false
+            name = "location_id",
+            foreignKey = @ForeignKey(name = "fk_permission_location")
     )
-    private Environment environment;
+    private Location location;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(
             name = "requester_id",
-            foreignKey = @ForeignKey(name = "fk_permission_requester"),
-            nullable = false
+            foreignKey = @ForeignKey(name = "fk_permission_requester")
     )
     private Requester requester;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(
             name = "user_id",
-            foreignKey = @ForeignKey(name = "fk_permission_user"),
-            nullable = false
+            foreignKey = @ForeignKey(name = "fk_permission_user")
     )
     private User user;
 
     private String description;
 
-    @Column(nullable = false)
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDateTime;
 
-    @Column(nullable = false)
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDateTime;
 }

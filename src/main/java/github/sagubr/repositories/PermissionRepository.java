@@ -6,5 +6,5 @@ import io.micronaut.data.annotation.Repository;
 
 @Introspected
 @Repository
-public interface PermissionRepository extends PatternRepository<Permission>{
+public interface PermissionRepository extends GenericRepository<Permission, java.util.UUID> {
 }

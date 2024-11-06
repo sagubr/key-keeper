@@ -2,6 +2,7 @@ package github.sagubr.entities;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,20 +18,19 @@ import lombok.Setter;
 @Serdeable
 public class Requester extends EntityPattern {
 
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
-    @Column(nullable = false)
+    @NotNull
     private String email;
 
     private String register;
 
     @ManyToOne
     @JoinColumn(
-            name = "position_id",
-            foreignKey = @ForeignKey(name = "fk_requester_position"),
-            nullable = false
+            name = "job_title_id",
+            foreignKey = @ForeignKey(name = "fk_requester_job_title")
     )
-    private Position position;
+    private JobTitle jobTitle;
 
 }

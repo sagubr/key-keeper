@@ -1,13 +1,15 @@
 package github.sagubr.security;
 
-import github.sagubr.entities.dtos.UserDto;
+import github.sagubr.model.UserDto;
 import github.sagubr.services.BCryptPasswordEncoderService;
 import github.sagubr.services.UserService;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.security.authentication.*;
+import io.micronaut.security.authentication.AuthenticationFailureReason;
+import io.micronaut.security.authentication.AuthenticationRequest;
+import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.provider.HttpRequestAuthenticationProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

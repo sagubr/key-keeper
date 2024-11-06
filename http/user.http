@@ -1,0 +1,32 @@
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "gustavo.garcia",
+  "password": "password"
+}
+
+> {%
+    client.global.set("bearerToken", response.body.access_token)
+%}
+
+###
+POST http://localhost:8080/api/users/save
+Content-Type: application/json
+Authorization: Bearer {{bearerToken}}
+
+{
+  "email": "gustavo.garcia@gmail.com1234",
+  "name": "Gustavo Garcia",
+  "password": "password",
+  "username": "gustavo.garcia",
+  "roles": [
+    "MANAGER"
+  ]
+}
+
+###
+GET http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: Bearer {{bearerToken}}

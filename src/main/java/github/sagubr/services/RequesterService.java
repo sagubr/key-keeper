@@ -2,21 +2,15 @@ package github.sagubr.services;
 
 import github.sagubr.entities.Requester;
 import github.sagubr.repositories.RequesterRepository;
-import io.micronaut.transaction.annotation.Transactional;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor(onConstructor = @__(@Inject))
 @Singleton
-public class RequesterService {
+@SuperBuilder
+public class RequesterService extends GenericService<Requester, UUID> {
 
     private final RequesterRepository repository;
 
-    @Transactional
-    public List<Requester> findAll() {
-        return repository.findAll();
-    }
 }

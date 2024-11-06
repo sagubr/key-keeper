@@ -3,12 +3,12 @@ package github.sagubr.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -30,11 +30,11 @@ public class Reservation extends EntityPattern {
 
     @ManyToOne
     @JoinColumn(
-            name = "environment_id",
-            foreignKey = @ForeignKey(name = "fk_reservation_environment"),
+            name = "location_id",
+            foreignKey = @ForeignKey(name = "fk_reservation_location"),
             nullable = false
     )
-    private Environment environment;
+    private Location location;
 
     @ManyToOne
     @JoinColumn(
@@ -46,15 +46,15 @@ public class Reservation extends EntityPattern {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
-    @Column(nullable = false)
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDateTime;
 
-    @Column(nullable = false)
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDateTime;
 
-    @Column(nullable = false)
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Status status;
 }

@@ -6,5 +6,5 @@ import io.micronaut.data.annotation.Repository;
 
 @Introspected
 @Repository
-public interface KeyRepository extends PatternRepository<Key>{
+public interface KeyRepository extends GenericRepository<Key, java.util.UUID> {
 }
