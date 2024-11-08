@@ -24,10 +24,10 @@ public class LocationController {
 
     private final LocationService service;
 
-    @Operation(summary = "Obter todos os ambientes")
+    @Operation(summary = "Obter todos as salas")
     @DefaultResponses
     @Get
-    public List<Location> findAll() {
+    public List<Location> findAllLocations() {
         return service.findAll();
     }
 

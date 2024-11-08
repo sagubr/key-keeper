@@ -12,19 +12,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "keys", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name", name = "unique_name"),
+        @UniqueConstraint(columnNames = "description", name = "unique_description"),
 })
 @Serdeable
 public class Key extends EntityPattern {
 
     @NotNull
+    @Column(nullable = false, unique = true)
     private String description;
 
     @NotNull
     @ManyToOne
     @JoinColumn(
-            name = "facility_id",
-            foreignKey = @ForeignKey(name = "fk_key_facility")
+            name = "location_id",
+            foreignKey = @ForeignKey(name = "fk_key_location"),
+            nullable = false
     )
     private Location location;
 }

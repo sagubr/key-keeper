@@ -21,19 +21,24 @@ import java.util.Set;
 public class User extends EntityPattern {
 
     @NotNull
+    @Column(nullable = false)
     private String name;
 
     @NotNull
+    @Column(nullable = false)
     private String username;
 
     @NotNull
+    @Column(nullable = false)
     private String email;
 
     @NotNull
+    @Column(nullable = false)
     private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Roles roles;
 
 }

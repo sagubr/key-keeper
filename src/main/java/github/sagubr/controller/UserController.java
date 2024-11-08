@@ -29,14 +29,14 @@ public class UserController {
     @Operation(summary = "Obter todos os usuários")
     @DefaultResponses
     @Get
-    public List<User> findAll() {
+    public List<User> findAllUsers() {
         return service.findAll();
     }
 
     @Operation(summary = "Criar novo usuário")
     @DefaultResponses
     @Post(value = "/save")
-    public User save(@Body @Valid UserDto userDTO) {
+    public User saveUser(@Body @Valid UserDto userDTO) {
         return service.save(userDTO);
     }
 }

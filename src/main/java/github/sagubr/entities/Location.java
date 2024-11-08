@@ -18,13 +18,15 @@ import lombok.Setter;
 public class Location extends EntityPattern {
 
     @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull
     @ManyToOne
     @JoinColumn(
             name = "facility_id",
-            foreignKey = @ForeignKey(name = "fk_location_facility")
+            foreignKey = @ForeignKey(name = "fk_location_facility"),
+            nullable = false
     )
     private Facility facility;
 
@@ -32,7 +34,8 @@ public class Location extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "location_type_id",
-            foreignKey = @ForeignKey(name = "fk_location_location_type")
+            foreignKey = @ForeignKey(name = "fk_location_location_type"),
+            nullable = false
     )
     private LocationType locationType;
 

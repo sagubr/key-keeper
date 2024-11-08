@@ -21,5 +21,6 @@ import lombok.Setter;
 public class JobTitle extends EntityPattern {
 
     @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 }

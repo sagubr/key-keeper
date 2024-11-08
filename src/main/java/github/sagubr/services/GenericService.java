@@ -43,11 +43,6 @@ public abstract class GenericService<T, UUID> {
     }
 
     @Transactional
-    public void deleteAll() {
-        repository.deleteAll();
-    }
-
-    @Transactional
     public T update(@NonNull T entity) {
         return repository.update(entity);
     }

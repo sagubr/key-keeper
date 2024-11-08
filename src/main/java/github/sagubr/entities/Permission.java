@@ -23,7 +23,8 @@ public class Permission extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "location_id",
-            foreignKey = @ForeignKey(name = "fk_permission_location")
+            foreignKey = @ForeignKey(name = "fk_permission_location"),
+            nullable = false
     )
     private Location location;
 
@@ -31,7 +32,8 @@ public class Permission extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "requester_id",
-            foreignKey = @ForeignKey(name = "fk_permission_requester")
+            foreignKey = @ForeignKey(name = "fk_permission_requester"),
+            nullable = false
     )
     private Requester requester;
 
@@ -39,17 +41,21 @@ public class Permission extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "user_id",
-            foreignKey = @ForeignKey(name = "fk_permission_user")
+            foreignKey = @ForeignKey(name = "fk_permission_user"),
+            nullable = false
     )
     private User user;
 
+    @Column
     private String description;
 
     @NotNull
+    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDateTime;
 
     @NotNull
+    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDateTime;
 }
