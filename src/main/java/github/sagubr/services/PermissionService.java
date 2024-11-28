@@ -8,9 +8,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.UUID;
 
 @Singleton
-@SuperBuilder
-public class PermissionService extends GenericService<Permission, UUID>  {
+public class PermissionService extends GenericService<Permission, UUID> {
 
-    private final PermissionRepository repository;
+    public PermissionService(PermissionRepository repository) {
+        super(repository);
+    }
 
 }

@@ -15,17 +15,17 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "LocationType", description = "Operações relacionadas a entidade Tipos de Ambiente")
+@Tag(name = "LocationType", description = "Operações relacionadas a entidade Tipos de Localização")
 @AllArgsConstructor(onConstructor = @__(@Inject))
 @Controller("/api/location-type")
 public class LocationTypeController {
 
     private final LocationTypeService service;
 
-    @Operation(summary = "Obter todos os tipos de ambiente")
+    @Operation(summary = "Obter todos os tipos de localização")
     @DefaultResponses
     @Get
-    public List<LocationType> getAllTypeEnvironments() {
+    public List<LocationType> findAllLocationTypes() {
         return service.findAll();
     }
 }

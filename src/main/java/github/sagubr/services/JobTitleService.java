@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Singleton
-@SuperBuilder
 public class JobTitleService extends GenericService<JobTitle, UUID> {
 
-    private final JobTitleRepository repository;
-
+    public JobTitleService(JobTitleRepository repository) {
+        super(repository);
+    }
 }

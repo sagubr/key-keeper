@@ -10,7 +10,7 @@ micronaut:
                 paths: classpath:META-INF/swagger/views/swagger-ui
                 mapping: /swagger-ui/**
     security:
-        enabled: true
+        enabled: false
         authentication: bearer
         token:
             jwt:
@@ -48,7 +48,7 @@ jpa:
             hibernate:
                 hbm2ddl:
                     auto: update
-                show_sql: true
+                show_sql: false
 liquibase:
     enabled: true
     datasources:

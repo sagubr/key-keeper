@@ -28,14 +28,6 @@ public class Reservation extends EntityPattern {
 
     @ManyToOne
     @JoinColumn(
-            name = "location_id",
-            foreignKey = @ForeignKey(name = "fk_reservation_location"),
-            nullable = false
-    )
-    private Location location;
-
-    @ManyToOne
-    @JoinColumn(
             name = "user_id",
             foreignKey = @ForeignKey(name = "fk_reservation_user"),
             nullable = false)

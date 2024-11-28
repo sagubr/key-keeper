@@ -14,7 +14,7 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/api/users/save
 Content-Type: application/json
-Authorization: Bearer {{bearerToken}}
+//Authorization: Bearer {{bearerToken}}
 
 {
   "email": "gustavo.garcia@gmail.com1234",
