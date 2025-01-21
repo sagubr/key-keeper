@@ -1,12 +1,11 @@
 package github.sagubr.services;
 
 import github.sagubr.repositories.GenericRepository;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.exceptions.EmptyResultException;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -28,12 +27,12 @@ public abstract class GenericService<T, UUID> {
     }
 
     @ReadOnly
-    public T findById(@NotBlank @NonNull UUID id) throws EmptyResultException {
+    public T findById(@NotBlank @NotNull UUID id) throws EmptyResultException {
         return repository.findById(id).orElseThrow(() -> new EmptyResultException());
     }
 
     @Transactional
-    public T save(@NonNull T entity) {
+    public T save(@NotNull T entity) {
         try {
             return repository.save(entity);
         } catch (Exception e) {
@@ -42,7 +41,7 @@ public abstract class GenericService<T, UUID> {
     }
 
     @Transactional
-    public void deleteById(@NotBlank @NonNull UUID id) {
+    public void deleteById(@NotBlank @NotNull UUID id) {
         try {
             repository.deleteById(id);
         } catch (Exception e) {
@@ -51,7 +50,7 @@ public abstract class GenericService<T, UUID> {
     }
 
     @Transactional
-    public void delete(@NonNull T entity) {
+    public void delete(@NotNull T entity) {
         try {
             repository.delete(entity);
         } catch (Exception e) {
@@ -60,7 +59,7 @@ public abstract class GenericService<T, UUID> {
     }
 
     @Transactional
-    public T update(@NonNull T entity) {
+    public T update(@NotNull T entity) {
         try {
             return repository.update(entity);
         } catch (Exception e) {

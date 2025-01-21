@@ -40,7 +40,7 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
         String secret = (String) authenticationRequest.getSecret();
 
         try {
-            Optional<UserDto> userOptional = userService.findUser(identity);
+            Optional<UserDto> userOptional = userService.findByUsername(identity);
 
             if (userOptional.isPresent()) {
                 UserDto user = userOptional.get();

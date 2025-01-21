@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Requesters", description = "Operações relacionadas a entidade solicitantes")
+@Tag(name = "Requester", description = "Operações relacionadas a entidade solicitantes")
 @AllArgsConstructor(onConstructor = @__(@Inject))
 @Controller("/api/requesters")
 public class RequesterController {

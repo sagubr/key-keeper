@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -37,14 +38,14 @@ public class Reservation extends EntityPattern {
     private String notes;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "UTC")
     @Column(nullable = false)
-    private LocalDateTime startDateTime;
+    private ZonedDateTime startDateTime;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "UTC")
     @Column(nullable = false)
-    private LocalDateTime endDateTime;
+    private ZonedDateTime endDateTime;
 
     @NotNull
     @Enumerated(EnumType.STRING)

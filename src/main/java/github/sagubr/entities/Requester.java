@@ -22,7 +22,7 @@ public class Requester extends EntityPattern {
     private String name;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     @Column(nullable = false, unique = true)

@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotNull;
 
+import java.security.Principal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,10 +34,17 @@ public class UserService extends GenericService<User, UUID> {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserDto> findUser(String username) {
+    public Optional<UserDto> findByUsername(String username) {
         return Optional.of(repository.findByUsername(username)
                         .orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found")))
                 .map(mapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<User> findByUsername(Principal principal) {
+        String username = principal.getName();
+        return Optional.of(repository.findByUsername(username)
+                        .orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found")));
     }
 
     @Transactional

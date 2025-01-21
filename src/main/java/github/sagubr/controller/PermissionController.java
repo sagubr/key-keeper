@@ -2,6 +2,7 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.Permission;
+import github.sagubr.entities.Requester;
 import github.sagubr.services.PermissionService;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -18,7 +19,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Permissions", description = "Operações relacionadas a entidade Permissão")
+@Tag(name = "Permission", description = "Operações relacionadas a entidade Permissão")
 @AllArgsConstructor(onConstructor = @__(@Inject))
 @Controller("/api/permissions")
 public class PermissionController {
@@ -32,10 +33,17 @@ public class PermissionController {
         return service.findAll();
     }
 
+    @Operation(summary = "Obter todas as permissões por solicitante")
+    @DefaultResponses
+    @Post("/requester")
+    public List<Permission> findByRequester(@Body @Valid Requester requester) {
+        return service.findByRequester(requester);
+    }
+
     @Operation(summary = "Criar nova instalação")
     @DefaultResponses
     @Post(value = "/save")
-    public Permission addFacility(@Body @Valid Permission permission) {
+    public Permission addPermission(@Body @Valid Permission permission) {
         return service.save(permission);
     }
 

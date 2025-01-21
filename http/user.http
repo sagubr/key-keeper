@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "gustavo.garcia",
-  "password": "password"
+  "password": "123456"
 }
 
 > {%
@@ -27,6 +27,11 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/users
+GET http://localhost:8080/swagger-ui/index.html#
+Content-Type: application/json
+Authorization: Bearer {{bearerToken}}
+
+###
+GET http://localhost:8080/api/reservations?status=RESERVATION
 Content-Type: application/json
 Authorization: Bearer {{bearerToken}}

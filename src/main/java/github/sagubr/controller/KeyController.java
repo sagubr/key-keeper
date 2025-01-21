@@ -1,6 +1,7 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
+import github.sagubr.entities.JobTitle;
 import github.sagubr.entities.Key;
 import github.sagubr.entities.Location;
 import github.sagubr.services.KeyService;
@@ -10,6 +11,7 @@ import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -32,8 +34,22 @@ public class KeyController {
     @Operation(summary = "Obter chaves por localização")
     @DefaultResponses
     @Post("/location")
-    public List<Key> findByLocation(@Body Location location) {
+    public List<Key> findByLocation(@Body @Valid Location location) {
         return service.findByLocation(location);
+    }
+
+    @Operation(summary = "Criar novo cargo")
+    @DefaultResponses
+    @Post(value = "/save")
+    public Key addKey(@Body @Valid Key key) {
+        return service.save(key);
+    }
+
+    @Operation(summary = "Atualizar cargo existente")
+    @DefaultResponses
+    @Post(value = "/update")
+    public Key updateKey(@Body @Valid Key key) {
+        return service.update(key);
     }
 
 }

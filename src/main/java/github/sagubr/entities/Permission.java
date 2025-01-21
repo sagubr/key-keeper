@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -37,12 +39,10 @@ public class Permission extends EntityPattern {
     )
     private Requester requester;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(
             name = "user_id",
-            foreignKey = @ForeignKey(name = "fk_permission_user"),
-            nullable = false
+            foreignKey = @ForeignKey(name = "fk_permission_user")
     )
     private User user;
 
@@ -50,12 +50,12 @@ public class Permission extends EntityPattern {
     private String description;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "UTC")
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime startDateTime;
+    private ZonedDateTime startDateTime;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "UTC")
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime endDateTime;
+    private ZonedDateTime endDateTime;
 }
