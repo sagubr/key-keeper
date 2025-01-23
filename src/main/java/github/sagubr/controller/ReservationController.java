@@ -60,4 +60,11 @@ public class ReservationController {
         service.updateActive(reservation.getId(), reservation.isActive());
     }
 
+    @Operation(summary = "Obter todas as reservas")
+    @DefaultResponses
+    @Post(value = "/change-status")
+    public void changeStatusReservation(@Body @Valid Reservation reservation) {
+        service.changeStatus(reservation.getId());
+    }
+
 }

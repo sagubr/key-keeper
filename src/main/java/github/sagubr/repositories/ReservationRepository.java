@@ -16,7 +16,11 @@ public interface ReservationRepository extends GenericRepository<Reservation, ja
 
     List<Reservation> findByStatus(Status status);
 
-    @Query("UPDATE reservations e SET e.active = :active WHERE e.id = :id")
+    @Query(value = "UPDATE reservations r SET r.active = :active WHERE r.id = :id"
+            , nativeQuery = true)
     void updateActive(@Id UUID id, boolean active);
+
+    @Query("UPDATE Reservation r SET r.status = :status WHERE r.id = :id")
+    void changeStatus(UUID id, Status status);
 
 }
