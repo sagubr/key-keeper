@@ -56,3 +56,23 @@
 - [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
 
 
+```mermaid
+graph TD;
+    A["Controller: Exposição de APIs, recebe requisições HTTP"]
+    B["Service: Regras de negócio, processamento dos dados"]
+    C["Repository: Acesso ao banco de dados, gerencia consultas e persistência"]
+    D["Entities: Modelos do banco de dados, mapeamento ORM"]
+    E["Model: DTOs, transferência de dados entre camadas"]
+    F["Config: Configurações gerais da aplicação"]
+    G["Security: Gerenciamento de autenticação e segurança"]
+    H["Util: Utilitários e helpers, funções auxiliares"]
+    
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+
+
