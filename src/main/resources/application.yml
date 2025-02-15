@@ -35,7 +35,9 @@ micronaut:
             allowed-headers:
                 - "*"
             exposed-headers:
+                - "Content-Type"
                 - "Authorization"
+            allow-credentials: true
 
 datasources:
     default:

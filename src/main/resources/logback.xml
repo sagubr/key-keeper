@@ -7,9 +7,12 @@
             <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n
             </pattern>
         </encoder>
+        <filter class="github.sagubr.logs.LoggingFilter"/>
     </appender>
+    <appender name="CUSTOM" class="github.sagubr.logs.LoggingAppender"/>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="CUSTOM"/>
     </root>
 </configuration>

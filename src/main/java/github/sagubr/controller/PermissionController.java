@@ -15,12 +15,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "Permission", description = "Operações relacionadas a entidade Permissão")
-@AllArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 @Controller("/api/permissions")
 public class PermissionController {
 

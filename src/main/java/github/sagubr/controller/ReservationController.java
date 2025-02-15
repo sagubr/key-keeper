@@ -17,13 +17,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.security.Principal;
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "Reservation", description = "Operações relacionadas a entidade reservas")
-@AllArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 @Controller("/api/reservations")
 public class ReservationController {
 

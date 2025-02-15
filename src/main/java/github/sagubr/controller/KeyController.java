@@ -13,12 +13,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "Key", description = "Operações relacionadas a entidade Chaves")
-@AllArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 @Controller("/api/key")
 public class KeyController {
 

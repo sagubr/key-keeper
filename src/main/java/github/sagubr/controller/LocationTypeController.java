@@ -11,12 +11,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "LocationType", description = "Operações relacionadas a entidade Tipos de Localização")
-@AllArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 @Controller("/api/location-type")
 public class LocationTypeController {
 

@@ -4,14 +4,14 @@ import io.micronaut.context.event.ApplicationEventPublisher;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
-
 @Singleton
 @RequiredArgsConstructor
-public class NotificationPublisher {
+public class NotifierEventPublisher {
 
-    private final ApplicationEventPublisher<Notification> publisher;
+    private final ApplicationEventPublisher<NotifierEvent> publisher;
 
     public void publish(String recipient, String message) {
-        publisher.publishEvent(new Notification(this, recipient, message));
+        publisher.publishEvent(new NotifierEvent(recipient, message));
     }
+
 }

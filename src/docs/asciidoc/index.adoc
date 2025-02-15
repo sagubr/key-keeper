@@ -32,5 +32,8 @@ Alice <-- Bob: another authentication Response
 
 Remember you can include piece of code extracted from your project using the `include` directive
 
-    include::{sourcedir}/com/mycompany/service/MyService.java[tags=init]
+    == Exemplo de Classe
+
+[java]
+    include::src/main/java/github/sagubr/notifications/NotificationListener.java[]
 

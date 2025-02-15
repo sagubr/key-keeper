@@ -6,11 +6,15 @@ import lombok.RequiredArgsConstructor;
 
 @Singleton
 @RequiredArgsConstructor
-public class NotificationJob {
+public class NotifierJob {
 
-    private final NotificationPublisher publisher;
+    private final NotifierEventPublisher publisher;
 
-    @Scheduled(fixedRate = "10s") // Executa a cada 1 minuto
+    /**
+     * Job que dispara a cada X milisegundos uma publisher.
+     * As classes que estiverem ouvindo a publisher, executam alguma ação.
+     */
+    @Scheduled(fixedRate = "30s")
     void triggerNotifications() {
         publisher.publish("email@teste.com", "Sua chave está pronta para retirada!");
     }

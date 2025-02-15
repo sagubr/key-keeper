@@ -14,6 +14,11 @@ repositories {
     mavenCentral()
 }
 
+asciidoctor {
+    sourceDir = file('src/docs/asciidoc') // Caminho para a pasta onde os arquivos .adoc estão localizados
+    outputDir = file("$buildDir/docs") // Pasta de saída para os arquivos gerados
+}
+
 dependencies {
     /* Data */
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
@@ -48,8 +53,13 @@ dependencies {
     testImplementation("io.micronaut:micronaut-http-client")
     annotationProcessor("io.micronaut:micronaut-http-validation")
 
+    implementation("io.micronaut.reactor:micronaut-reactor")
+
+    //logs
     implementation("org.slf4j:jul-to-slf4j:1.7.30")
+    implementation 'ch.qos.logback:logback-classic:0.9.26'
     runtimeOnly("ch.qos.logback:logback-classic")
+
     runtimeOnly("org.yaml:snakeyaml")
     aotPlugins platform("io.micronaut.platform:micronaut-platform:4.5.0")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
