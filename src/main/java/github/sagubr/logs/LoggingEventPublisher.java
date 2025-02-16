@@ -9,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Singleton
 @RequiredArgsConstructor
-public class LoggingPublisher {
+public class LoggingEventPublisher {
 
-    private final ApplicationEventPublisher<Logging> publisher;
+    private final ApplicationEventPublisher<LoggingEvent> publisher;
 
     public void publish(Level level, String message) {
-        log.info("Publicando log: {} - {}", level, message);
-        publisher.publishEvent(new Logging(level, message));
+        publisher.publishEvent(new LoggingEvent(level, message));
     }
 
 }

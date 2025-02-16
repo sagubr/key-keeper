@@ -11,14 +11,13 @@ import reactor.core.publisher.Sinks;
 @RequiredArgsConstructor
 public class LoggingService {
 
-    private final Sinks.Many<Logging> sink = Sinks.many().multicast().onBackpressureBuffer();
+    private final Sinks.Many<LoggingEvent> sink = Sinks.many().multicast().onBackpressureBuffer();
 
-    public Flux<Logging> getLogging() {
+    public Flux<LoggingEvent> getLogging() {
         return sink.asFlux();
     }
 
-    public void sendLogging(Logging logging) {
-        log.info("Enviando log para o fluxo: {} - {}", logging.level(), logging.message());
+    public void sendLogging(LoggingEvent logging) {
         sink.tryEmitNext(logging);
     }
 }

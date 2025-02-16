@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 @RequiredArgsConstructor
 public class LoggingConfigurer {
 
-    private final LoggingPublisher publisher;
+    private final LoggingEventPublisher publisher;
 
     @EventListener
     public void onStartup(ServerStartupEvent event) {

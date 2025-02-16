@@ -1,5 +1,6 @@
 package github.sagubr.notifications;
 
+import github.sagubr.logs.LoggingType;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ public class EmailNotifierStrategy implements NotifierStrategy {
 
     @Override
     public void send(NotifierEvent notifierEvent) {
-        log.info("Enviando e-mail para {}: {}", notifierEvent.recipient(), notifierEvent.message());
+        log.info("[{}] - Enviando e-mail para {}: {}", LoggingType.EVENT, notifierEvent.recipient(), notifierEvent.message());
     }
 }
 

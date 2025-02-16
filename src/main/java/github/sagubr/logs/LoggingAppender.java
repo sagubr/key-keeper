@@ -7,12 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Appender personalizado para capturar logs e publicá-los via {@link LoggingPublisher}.
+ * Appender personalizado para capturar logs e publicá-los via {@link LoggingEventPublisher}.
  */
 @Slf4j
 public class LoggingAppender extends AppenderBase<ILoggingEvent> {
 
-    private static LoggingPublisher publisher;
+    private static LoggingEventPublisher publisher;
 
     /** Fila temporária para armazenar logs caso o publisher ainda não esteja disponível */
     private static final ConcurrentLinkedQueue<ILoggingEvent> backlog = new ConcurrentLinkedQueue<>();
@@ -20,11 +20,10 @@ public class LoggingAppender extends AppenderBase<ILoggingEvent> {
     /**
      * Define o publisher para o appender e envia logs pendentes armazenados na fila.
      *
-     * @param loggingPublisher Instância do {@link LoggingPublisher} injetada pelo Micronaut.
+     * @param loggingEventPublisher Instância do {@link LoggingEventPublisher} injetada pelo Micronaut.
      */
-    public static void setPublisher(LoggingPublisher loggingPublisher) {
-        log.info("Configurando o publisher no LoggingAppender.");
-        publisher = loggingPublisher;
+    public static void setPublisher(LoggingEventPublisher loggingEventPublisher) {
+        publisher = loggingEventPublisher;
 
         while (!backlog.isEmpty()) {
             ILoggingEvent event = backlog.poll();

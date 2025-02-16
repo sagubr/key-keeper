@@ -8,13 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Singleton
 @RequiredArgsConstructor
-public class LoggingListener {
+public class LoggingEventListener {
 
     private final LoggingService service;
 
     @EventListener
-    public void onLoggingEvent(Logging logging) {
-        log.info("Acionando serviço log: {}", logging);
+    public void onLoggingEvent(LoggingEvent logging) {
         service.sendLogging(logging);
     }
 

@@ -23,12 +23,12 @@ public class LoggingController {
     private final LoggingService service;
 
     @Get(value = "/get", produces = MediaType.TEXT_EVENT_STREAM)
-    public Flux<Event<Logging>> streamLogging() {
-        log.info("Novo cliente conectado ao SSE [LOGGING].");
+    public Flux<Event<LoggingEvent>> streamLogging() {
+        log.info("[{}] - Novo cliente conectado ao SSE.", LoggingType.WORKFLOW);
         return service.getLogging()
                 .map(logging -> Event.of(logging))
-                .doOnSubscribe(subscription -> log.info("Fluxo de logs iniciado para o cliente SSE. [LOGGING]"))
-                .doOnCancel(() -> log.info("Cliente desconectado do SSE. [LOGGING]"));
+                .doOnSubscribe(subscription -> log.info("Fluxo de logs iniciado para o cliente SSE."))
+                .doOnCancel(() -> log.info("[{}] - Cliente desconectado do SSE.", LoggingType.WORKFLOW));
     }
 
 }
