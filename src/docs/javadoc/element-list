@@ -1,0 +1,12 @@
+github.sagubr
+github.sagubr.annotations
+github.sagubr.controller
+github.sagubr.entities
+github.sagubr.logs
+github.sagubr.mappers
+github.sagubr.model
+github.sagubr.notifications
+github.sagubr.repositories
+github.sagubr.security
+github.sagubr.services
+github.sagubr.utils
