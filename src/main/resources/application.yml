@@ -38,6 +38,15 @@ micronaut:
                 - "Content-Type"
                 - "Authorization"
             allow-credentials: true
+    email:
+        provider: "sendgrid"
+        from:
+            email: "guardiao.chaves@gmail.com"
+            name: "Guardião de Chaves"
+
+sendgrid:
+    enabled: true
+    api-key: ${SENDGRID_API_KEY}
 
 datasources:
     default:
@@ -45,6 +54,7 @@ datasources:
         username: ${DEFAULT_DB_USERNAME:`postgres`}
         password: ${DEFAULT_DB_PASSWORD:`postgres`}
         driverClassName: org.postgresql.Driver
+
 jpa:
     default:
         packages-to-scan:
@@ -54,6 +64,7 @@ jpa:
                 hbm2ddl:
                     auto: update
                 show_sql: false
+
 liquibase:
     enabled: true
     datasources:

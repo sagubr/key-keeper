@@ -1,7 +1,7 @@
 package github.sagubr.controller;
 
 import github.sagubr.notifications.NotifierEvent;
-import github.sagubr.services.NotificationService;
+import github.sagubr.services.NotifierService;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationService notificationService;
+    private final NotifierService notifierService;
 
     /**
      * Endpoint para os clientes se inscreverem e receberem notificações.
@@ -30,7 +30,7 @@ public class NotificationController {
     @Get(value = "/pop-up", produces = MediaType.TEXT_EVENT_STREAM)
     public Flux<Event<NotifierEvent>> streamNotifications() {
         log.info("Novo cliente conectado ao SSE.");
-        return notificationService.getNotificationFlux()
+        return notifierService.getNotificationFlux()
                 .map(notification -> Event.of(notification))
                 .doOnCancel(() -> log.info("Cliente desconectado do SSE."));
     }

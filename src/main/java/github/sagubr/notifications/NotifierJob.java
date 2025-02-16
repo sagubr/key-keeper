@@ -16,6 +16,7 @@ public class NotifierJob {
      */
     @Scheduled(fixedRate = "30s")
     void triggerNotifications() {
-        publisher.publish("email@teste.com", "Sua chave está pronta para retirada!");
+        publisher.publish("sousagustavogarcia@gmail.com", "Sua chave está pronta para retirada!");
     }
+
 }

@@ -12,4 +12,5 @@ public class LocationTypeService extends GenericService<LocationType, UUID> {
     public LocationTypeService(LocationTypeRepository repository) {
         super(repository);
     }
+
 }
