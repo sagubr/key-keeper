@@ -1,5 +1,6 @@
 package github.sagubr.model;
 
+import github.sagubr.entities.Assignment;
 import github.sagubr.entities.Roles;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.Getter;
@@ -18,11 +19,11 @@ public class UserDto {
     private String name;
     private String password;
     private String username;
-    private Roles roles;
+    private Assignment assignment;
 
-    public UserDto(String username, String password, Roles roles) {
+    public UserDto(String username, String password, Assignment assignment) {
         this.password = password;
-        this.roles = roles;
+        this.assignment = assignment;
         this.username = username;
     }
 

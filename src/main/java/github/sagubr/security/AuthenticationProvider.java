@@ -25,10 +25,10 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${users.master.username}")
+    @Value("${master.username}")
     private String masterUsername;
 
-    @Value("${users.master.password}")
+    @Value("${master.password}")
     private String masterPassword;
 
     @Inject
@@ -55,7 +55,7 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
             if (userOptional.isPresent()) {
                 UserDto user = userOptional.get();
                 if (passwordEncoder.matches(secret, user.getPassword())) {
-                    return AuthenticationResponse.success(identity, Collections.singletonList(user.getRoles().toString()));
+                    return AuthenticationResponse.success(identity, Collections.singletonList(user.getAssignment().toString()));
                 }
             }
             return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);

@@ -37,11 +37,6 @@ public class User extends EntityPattern {
     private String password;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Roles roles;
-
-    @NotNull
     private boolean firstAccess = true;
 
     @ManyToMany
