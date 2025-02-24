@@ -23,4 +23,6 @@ public class LocationType extends EntityPattern {
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
+
+    private String description;
 }

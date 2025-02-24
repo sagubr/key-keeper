@@ -19,7 +19,7 @@ public class EmailNotifierStrategy implements NotifierStrategy {
 
     @Override
     public void send(NotifierEvent notifierEvent) {
-        service.send(notifierEvent.recipient(), EmailTemplate.WELCOME.content(), Map.of("name", notifierEvent.recipient())).subscribe();
+        //service.send(notifierEvent.recipient(), EmailTemplate.WELCOME.content(), Map.of("name", notifierEvent.recipient())).subscribe();
     }
 }
 

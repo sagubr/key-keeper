@@ -37,8 +37,8 @@ public class UserController {
     @Operation(summary = "Criar novo usuário")
     @DefaultResponses
     @Post(value = "/save")
-    public User addUser(@Body @Valid UserDto userDTO) {
-        return service.save(userDTO);
+    public User addUser(@Body @Valid UserDto user) {
+        return service.save(user);
     }
 
 }

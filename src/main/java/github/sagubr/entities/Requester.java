@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,8 +26,8 @@ public class Requester extends EntityPattern {
     private String name;
 
     @NotNull
-    @Column(unique = true)
-    private String email;
+    @OneToMany(mappedBy = "requester")
+    private Set<RequesterEmail> emails = new HashSet<>();
 
     @Column(nullable = false, unique = true)
     private String register;
@@ -35,5 +39,9 @@ public class Requester extends EntityPattern {
             nullable = false
     )
     private JobTitle jobTitle;
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean isResponsible = false;
 
 }

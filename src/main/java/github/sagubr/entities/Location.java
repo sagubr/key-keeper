@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,6 +23,8 @@ public class Location extends EntityPattern {
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
+
+    private String description;
 
     @NotNull
     @ManyToOne
@@ -38,5 +43,17 @@ public class Location extends EntityPattern {
             nullable = false
     )
     private LocationType locationType;
+
+    private Integer maxCapacity;
+
+    private boolean isRestricted;
+
+    private LocalTime openingTime;
+
+    private LocalTime closingTime;
+
+    @OneToMany
+    @JoinColumn(name = "requester_id")
+    private List<Requester> responsibles;
 
 }
