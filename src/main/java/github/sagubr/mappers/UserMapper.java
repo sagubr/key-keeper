@@ -1,18 +1,18 @@
 package github.sagubr.mappers;
 
 import github.sagubr.entities.User;
-import github.sagubr.model.UserDto;
+import github.sagubr.models.UserDto;
 import jakarta.inject.Singleton;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Singleton
 @Mapper(componentModel = "jsr330")
 public abstract class UserMapper {
 
-    public abstract User toEntity(UserDto userDto);
-
+    @Mapping(source = "assignment", target = "assignment")
     public abstract UserDto toDto(User user);
 
+    @Mapping(source = "assignment", target = "assignment")
+    public abstract User toEntity(UserDto userDto);
 }
-
-

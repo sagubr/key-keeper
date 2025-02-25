@@ -2,7 +2,6 @@ package github.sagubr.entities;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +23,14 @@ public class Assignment extends EntityPattern {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ElementCollection
-    @Column(name = "roles")
-    private Set<Roles> roles;
+    @ElementCollection(targetClass = Screen.class, fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "assignment_screens",
+            joinColumns = @JoinColumn(name = "assignment_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "screen")
+    private Set<Screen> screens;
 
 }
 

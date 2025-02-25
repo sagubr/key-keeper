@@ -2,47 +2,52 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.Location;
+import github.sagubr.models.LocationDto;
 import github.sagubr.services.LocationService;
 import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Tag(name = "Location", description = "Operações relacionadas a entidade Localização")
+@Tag(name = "Location", description = "Classe referência para Localização")
 @RequiredArgsConstructor
 @Controller("/api/location")
 public class LocationController {
 
     private final LocationService service;
 
-    @Operation(summary = "Obter todas as localizações")
+    @Operation(summary = "Obter todos os registros da classe localização")
     @DefaultResponses
     @Get
-    public List<Location> findAllLocations() {
+    public List<Location> findAllLocation() {
         return service.findAll();
     }
 
-    @Operation(summary = "Obter detalhes de uma localização por ID")
+    @Operation(summary = "Obter todos os registros da classe localização filtrados por id")
     @DefaultResponses
     @Get("/{id}")
     public Location findByIdLocation(@PathVariable UUID id) {
         return service.findById(id);
     }
 
-    @Operation(summary = "Criar nova localização")
+    @Operation(summary = "Obter todos os registros da classe localização resumido")
+    @DefaultResponses
+    @Get("/summary")
+    public List<LocationDto> findAllLocationSummaries() {
+        return service.findAllLocationSummaries();
+    }
+
+    @Operation(summary = "Criar novo registro na classe localização")
     @DefaultResponses
     @Post(value = "/save")
-    public Location addLocation(@Body @Valid Location location) {
-        System.out.println(location.toString());
+    public Location createLocation(@Body @Valid Location location) {
         return service.save(location);
     }
 

@@ -16,7 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "requesters", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email", name = "unique_email"),
         @UniqueConstraint(columnNames = "register", name = "unique_register")
 })
 @Serdeable
@@ -25,9 +24,13 @@ public class Requester extends EntityPattern {
     @NotNull
     private String name;
 
-    @NotNull
-    @OneToMany(mappedBy = "requester")
-    private Set<RequesterEmail> emails = new HashSet<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "requester_emails",
+            joinColumns = @JoinColumn(name = "requester_id", referencedColumnName = "id")
+    )
+    @Column(name = "email", nullable = false)
+    private Set<String> emails = new HashSet<>();
 
     @Column(nullable = false, unique = true)
     private String register;
@@ -43,5 +46,9 @@ public class Requester extends EntityPattern {
     @NotNull
     @Column(nullable = false)
     private boolean isResponsible = false;
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean isBlocked = false;
 
 }

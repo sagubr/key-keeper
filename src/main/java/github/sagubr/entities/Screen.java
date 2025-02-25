@@ -1,9 +1,11 @@
 package github.sagubr.entities;
 
+import io.micronaut.serde.annotation.Serdeable;
 import lombok.Getter;
 
 @Getter
-public enum Roles {
+@Serdeable
+public enum Screen {
 
     EMPRESTIMOS,
     HISTORICO,

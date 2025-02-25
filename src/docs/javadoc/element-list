@@ -4,7 +4,7 @@ github.sagubr.controller
 github.sagubr.entities
 github.sagubr.logs
 github.sagubr.mappers
-github.sagubr.model
+github.sagubr.models
 github.sagubr.notifications
 github.sagubr.repositories
 github.sagubr.security

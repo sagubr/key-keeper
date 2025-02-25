@@ -1,11 +1,11 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.User;
-import github.sagubr.mail.EmailService;
 import github.sagubr.mail.EmailTemplate;
 import github.sagubr.mail.SendGridEmailService;
-import github.sagubr.model.UserDto;
+import github.sagubr.models.UserDto;
 import github.sagubr.mappers.UserMapper;
+import github.sagubr.models.UserSummaryDto;
 import github.sagubr.repositories.UserRepository;
 import github.sagubr.security.PasswordEncoder;
 import github.sagubr.security.PasswordGenerator;
@@ -16,10 +16,7 @@ import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotNull;
 
 import java.security.Principal;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Singleton
 public class UserService extends GenericService<User, UUID> {
@@ -43,6 +40,11 @@ public class UserService extends GenericService<User, UUID> {
         this.sendGridEmailService = sendGridEmailService;
     }
 
+    @Transactional
+    public List<UserSummaryDto> findAllUserSummaries() {
+        return repository.findAllUserSummaries();
+    }
+
     @Transactional(readOnly = true)
     public Optional<UserDto> findByUsername(String username) {
         return Optional.of(repository.findByUsername(username)
@@ -58,10 +60,10 @@ public class UserService extends GenericService<User, UUID> {
     }
 
     @Transactional
-    public User save(@NotNull UserDto user) {
+    public User save(@NotNull User user) {
         String temporaryPassword = PasswordGenerator.generate(8);
         user.setPassword(passwordEncoder.encode(temporaryPassword));
-        User saved = repository.save(mapper.toEntity(user));
+        User saved = repository.save(user);
         if (saved.isFirstAccess()) {
             this.sendGridEmailService.send(saved.getEmail(), EmailTemplate.WELCOME.content(), Map.of("name", saved.getName(), "password", temporaryPassword)).subscribe();
         }

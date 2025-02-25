@@ -1,6 +1,6 @@
 package github.sagubr.security;
 
-import github.sagubr.model.UserDto;
+import github.sagubr.models.UserDto;
 import github.sagubr.services.UserService;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.annotation.Value;
@@ -13,7 +13,6 @@ import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.provider.HttpRequestAuthenticationProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -54,8 +53,8 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
 
             if (userOptional.isPresent()) {
                 UserDto user = userOptional.get();
-                if (passwordEncoder.matches(secret, user.getPassword())) {
-                    return AuthenticationResponse.success(identity, Collections.singletonList(user.getAssignment().toString()));
+                if (passwordEncoder.matches(secret, user.password())) {
+                    return AuthenticationResponse.success(identity, Collections.singletonList(user.assignment().toString()));
                 }
             }
             return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);

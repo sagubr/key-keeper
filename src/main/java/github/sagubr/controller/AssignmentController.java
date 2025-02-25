@@ -2,9 +2,7 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.Assignment;
-import github.sagubr.entities.JobTitle;
 import github.sagubr.services.AssignmentService;
-import github.sagubr.services.JobTitleService;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

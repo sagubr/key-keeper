@@ -1,5 +1,6 @@
 package github.sagubr.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Timer;
 
 @Getter
 @Setter
@@ -48,12 +52,18 @@ public class Location extends EntityPattern {
 
     private boolean isRestricted;
 
-    private LocalTime openingTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "UTC")
+    private ZonedDateTime openingTime;
 
-    private LocalTime closingTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "UTC")
+    private ZonedDateTime closingTime;
 
-    @OneToMany
-    @JoinColumn(name = "requester_id")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "location_responsible",
+            joinColumns = @JoinColumn(name = "location_id"),
+            inverseJoinColumns = @JoinColumn(name = "requester_id")
+    )
     private List<Requester> responsibles;
 
 }

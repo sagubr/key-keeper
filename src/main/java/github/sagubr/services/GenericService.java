@@ -18,6 +18,7 @@ public abstract class GenericService<T, UUID> {
     protected final GenericRepository<T, UUID> repository;
 
     @ReadOnly
+    @Transactional
     public List<T> findAll() throws EmptyResultException {
         List<T> result = repository.findAll();
         if (result.isEmpty()) {
@@ -27,6 +28,7 @@ public abstract class GenericService<T, UUID> {
     }
 
     @ReadOnly
+    @Transactional
     public T findById(@NotBlank @NotNull UUID id) throws EmptyResultException {
         return repository.findById(id).orElseThrow(() -> new EmptyResultException());
     }

@@ -39,12 +39,13 @@ public class User extends EntityPattern {
     @NotNull
     private boolean firstAccess = true;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_assignment",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "assignment_id")
+    @ManyToOne
+    @JoinColumn(
+            name = "assignment_id",
+            foreignKey = @ForeignKey(name = "fk_user_assignment"),
+            nullable = false
     )
-    private Set<Assignment> assignments;
+    private Assignment assignment;
+
 
 }
