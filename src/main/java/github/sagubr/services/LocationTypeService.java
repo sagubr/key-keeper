@@ -1,7 +1,6 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.LocationType;
-import github.sagubr.models.LocationTypeDto;
 import github.sagubr.repositories.LocationTypeRepository;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Singleton;
@@ -17,11 +16,6 @@ public class LocationTypeService extends GenericService<LocationType, UUID> {
     public LocationTypeService(LocationTypeRepository repository) {
         super(repository);
         this.repository = repository;
-    }
-
-    @Transactional
-    public List<LocationTypeDto> findAllLocationTypeSummaries() {
-        return repository.findAllLocationTypeSummaries();
     }
 
 }

@@ -2,7 +2,6 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.LocationType;
-import github.sagubr.models.LocationTypeDto;
 import github.sagubr.services.LocationTypeService;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -30,13 +29,6 @@ public class LocationTypeController {
     @Get
     public List<LocationType> findAllLocationType() {
         return service.findAll();
-    }
-
-    @Operation(summary = "Obter todos os registros da classe tipos de ambiente resumido")
-    @DefaultResponses
-    @Get("/summary")
-    public List<LocationTypeDto> findAllLocationTypeSummaries() {
-        return service.findAllLocationTypeSummaries();
     }
 
     @Operation(summary = "Criar novo registro na classe tipos de ambiente")

@@ -3,45 +3,37 @@ package github.sagubr.services;
 import github.sagubr.entities.Reservation;
 import github.sagubr.entities.Status;
 import github.sagubr.repositories.ReservationRepository;
+import io.micronaut.cache.annotation.CacheInvalidate;
+import io.micronaut.cache.annotation.Cacheable;
 import io.micronaut.transaction.annotation.Transactional;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
-import lombok.experimental.SuperBuilder;
+import lombok.RequiredArgsConstructor;
 
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Singleton
-@SuperBuilder
-public class ReservationService extends GenericService<Reservation, UUID> {
+@RequiredArgsConstructor
+public class ReservationService {
 
     private final ReservationRepository repository;
 
-    @Inject
-    public ReservationService(
-            ReservationRepository repository
-    ) {
-        super(repository);
-        this.repository = repository;
-    }
-
+    @Cacheable("reservations-status")
     public List<Reservation> findByStatus(Status status) {
         return this.repository.findByStatus(status);
     }
 
     @Transactional
+    @CacheInvalidate("reservations")
     public void updateActive(@NotNull UUID id, @NotNull boolean active) {
-        try {
-            repository.updateActive(id, active);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while updating the entity.", e);
-        }
+        repository.updateActive(id, active);
     }
 
     @Transactional
+    @CacheInvalidate("reservations")
     public void changeStatus(@NotNull UUID id) {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found for id: " + id));
@@ -59,4 +51,37 @@ public class ReservationService extends GenericService<Reservation, UUID> {
         }
     }
 
+    @Cacheable("reservations")
+    public List<Reservation> findAll() {
+        return repository.findAll();
+    }
+
+    @Cacheable("reservation")
+    public Optional<Reservation> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Transactional
+    @CacheInvalidate(value = {"reservations", "reservation"})
+    public Reservation save(Reservation entity) {
+        return repository.save(entity);
+    }
+
+    @Transactional
+    @CacheInvalidate(value = {"reservations", "reservation"})
+    public Reservation update(Reservation entity) {
+        return repository.update(entity);
+    }
+
+    @Transactional
+    @CacheInvalidate(value = {"reservations", "reservation"})
+    public void delete(Reservation entity) {
+        repository.delete(entity);
+    }
+
+    @Transactional
+    @CacheInvalidate("reservations")
+    public void deleteById(UUID id) {
+        repository.deleteById(id);
+    }
 }

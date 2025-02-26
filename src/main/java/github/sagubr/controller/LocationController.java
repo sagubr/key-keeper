@@ -2,7 +2,6 @@ package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.entities.Location;
-import github.sagubr.models.LocationDto;
 import github.sagubr.services.LocationService;
 import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
@@ -35,13 +34,6 @@ public class LocationController {
     @Get("/{id}")
     public Location findByIdLocation(@PathVariable UUID id) {
         return service.findById(id);
-    }
-
-    @Operation(summary = "Obter todos os registros da classe localização resumido")
-    @DefaultResponses
-    @Get("/summary")
-    public List<LocationDto> findAllLocationSummaries() {
-        return service.findAllLocationSummaries();
     }
 
     @Operation(summary = "Criar novo registro na classe localização")

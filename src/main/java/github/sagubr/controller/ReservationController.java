@@ -1,3 +1,4 @@
+
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
@@ -6,10 +7,7 @@ import github.sagubr.entities.Status;
 import github.sagubr.entities.User;
 import github.sagubr.services.ReservationService;
 import github.sagubr.services.UserService;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Tag(name = "Reservation", description = "Classe referência para Reservas")
@@ -36,34 +36,54 @@ public class ReservationController {
         return service.findAll();
     }
 
-    @Operation(summary = "Obter todos os registros da classe reservas filtrados por status")
+    @Operation(summary = "Obter reserva por ID")
     @DefaultResponses
-    @Get(value = "/status")
-    public List<Reservation> findAllByStatusReservation(@Valid Status status) {
+    @Get("/{id}")
+    public Optional<Reservation> findByIdReservation(UUID id) {
+        return service.findById(id);
+    }
+
+    @Operation(summary = "Obter todas as reservas filtradas por status")
+    @DefaultResponses
+    @Get("/status")
+    public List<Reservation> findAllByStatusReservation(@QueryValue Status status) {
         return service.findByStatus(status);
     }
 
-    @Operation(summary = "Criar novo registro na classe reservas")
+    @Operation(summary = "Criar nova reserva")
     @DefaultResponses
-    @Post(value = "/save")
-    public Reservation addReservation(@Body @Valid Reservation reservation, Principal principal) {
-        User user = userService.findByUsername(principal).get();
+    @Post("/save")
+    public Reservation createReservation(@Body @Valid Reservation reservation, Principal principal) {
+        User user = userService.findByUsername(principal).orElseThrow();
         reservation.setUser(user);
         return service.save(reservation);
     }
 
-    @Operation(summary = "Atualizar registro ativo na classe reservas")
+    @Operation(summary = "Atualizar uma reserva")
     @DefaultResponses
-    @Post(value = "/active")
-    public void updateActiveReservation(@Body @Valid Reservation reservation) {
-        service.updateActive(reservation.getId(), reservation.isActive());
+    @Put("/update/")
+    public Reservation updateReservation(@Body @Valid Reservation reservation) {
+        return service.update(reservation);
     }
 
-    @Operation(summary = "Atualizar registro status na classe reservas")
+    @Operation(summary = "Excluir uma reserva por ID")
     @DefaultResponses
-    @Post(value = "/change-status")
+    @Delete("/delete/{id}")
+    public void deleteByIdReservation(UUID id) {
+        service.deleteById(id);
+    }
+
+    @Operation(summary = "Atualizar status de uma reserva")
+    @DefaultResponses
+    @Post("/change-status")
     public void changeStatusReservation(@Body @Valid Reservation reservation) {
         service.changeStatus(reservation.getId());
     }
 
+    @Operation(summary = "Atualizar campo ativo de uma reserva")
+    @DefaultResponses
+    @Post("/active")
+    public void updateActiveReservation(@Body @Valid Reservation reservation) {
+        service.updateActive(reservation.getId(), reservation.isActive());
+    }
 }

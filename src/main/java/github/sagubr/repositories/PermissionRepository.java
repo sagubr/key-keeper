@@ -6,11 +6,12 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.data.annotation.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Introspected
 @Repository
 public interface PermissionRepository extends GenericRepository<Permission, java.util.UUID> {
 
-    List<Permission> findByRequester(Requester requester);
+    List<Permission> findByRequesterId(UUID id);
 
 }

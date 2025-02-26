@@ -57,6 +57,10 @@ dependencies {
     implementation("org.thymeleaf:thymeleaf:3.0.15")
     implementation("io.micronaut.email:micronaut-email-sendgrid")
 
+    /* cache */
+    implementation("io.micronaut.cache:micronaut-cache-core")
+    implementation("io.micronaut.cache:micronaut-cache-caffeine")
+
     implementation("io.micronaut.reactor:micronaut-reactor")
 
     /* logging */
