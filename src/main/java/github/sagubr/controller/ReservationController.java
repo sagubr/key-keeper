@@ -46,7 +46,7 @@ public class ReservationController {
     @Operation(summary = "Obter todas as reservas filtradas por status")
     @DefaultResponses
     @Get("/status")
-    public List<Reservation> findAllByStatusReservation(@QueryValue Status status) {
+    public List<Reservation> findAllByStatusReservation(@QueryValue List<Status> status) {
         return service.findByStatus(status);
     }
 
@@ -75,9 +75,9 @@ public class ReservationController {
 
     @Operation(summary = "Atualizar status de uma reserva")
     @DefaultResponses
-    @Post("/change-status")
+    @Put("/change-status")
     public void changeStatusReservation(@Body @Valid Reservation reservation) {
-        service.changeStatus(reservation.getId());
+        service.changeStatus(reservation);
     }
 
     @Operation(summary = "Atualizar campo ativo de uma reserva")

@@ -6,14 +6,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Status {
-    LOAN("EMPRÉSTIMO"),
-    SCHEDULED("AGENDADO"),
-    COMPLETED("CONCLUÍDO");
 
-    private final String description;
+    EMPRESTIMO,
+    AGENDADO,
+    CANCELADO,
+    CONCLUIDO;
 
-    @Override
-    public String toString() {
-        return description;
-    }
 }

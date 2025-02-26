@@ -1,13 +1,19 @@
 package github.sagubr.notifications;
 
+import github.sagubr.entities.Reservation;
+import github.sagubr.services.ReservationService;
 import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 @RequiredArgsConstructor
 public class NotifierJob {
 
+    private final ReservationService service;
     private final NotifierEventPublisher publisher;
 
     /**
@@ -16,7 +22,18 @@ public class NotifierJob {
      */
     @Scheduled(fixedRate = "30s")
     void triggerNotifications() {
-        publisher.publish("sousagustavogarcia@gmail.com", "Sua chave está pronta para retirada!");
+
+        List<Reservation> reservations = service.findAll().stream().filter(
+                        reservation ->
+                                reservation.isOverdue() && !reservation.isNotificationSent())
+                .collect(Collectors.toList());
+
+        if (reservations.isEmpty()) {
+            return;
+        }
+        //TODO: Converter entidade Reservation para um ReservationPublisherDto com o keyCode.
+        //TODO: só enviar e-mail para os status == EMPRESTIMO
+        reservations.forEach(reservation -> publisher.publish(reservation, ""));
     }
 
 }

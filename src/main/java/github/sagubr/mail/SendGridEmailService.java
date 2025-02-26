@@ -34,14 +34,14 @@ public class SendGridEmailService implements EmailService {
     private String name;
 
     @Override
-    public Mono<Boolean> send(String to, String templateName, Map<String, Object> params) {
+    public Mono<Boolean> send(String to, EmailTemplate templateName, Map<String, Object> params) {
 
-        String content = templateService.renderTemplate(templateName, params);
+        String content = templateService.renderTemplate(templateName.content(), params);
         return Mono.from(email.sendAsync(
                         Email.builder()
                                 .from(from)
                                 .to(to)
-                                .subject("Envio de e-mail com Micronaut e SendGrid")
+                                .subject(templateName.subject())
                                 .body(content, BodyType.HTML)
                 ))
                 .doOnNext(response -> log.info("[{}]Enviando e-mail para {}", LoggingType.EVENT, to))

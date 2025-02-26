@@ -21,34 +21,26 @@ public class ReservationService {
 
     private final ReservationRepository repository;
 
-    @Cacheable("reservations-status")
-    public List<Reservation> findByStatus(Status status) {
-        return this.repository.findByStatus(status);
+    @Cacheable(value = "reservations-status", parameters = "status")
+    public List<Reservation> findByStatus(List<Status> status) {
+        return this.repository.findByStatusIn(status);
     }
 
     @Transactional
-    @CacheInvalidate("reservations")
+    @CacheInvalidate(value = "reservations", all = true)
     public void updateActive(@NotNull UUID id, @NotNull boolean active) {
         repository.updateActive(id, active);
     }
 
     @Transactional
-    @CacheInvalidate("reservations")
-    public void changeStatus(@NotNull UUID id) {
-        Reservation reservation = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reservation not found for id: " + id));
+    @CacheInvalidate(value = "reservations", all = true)
+    public void changeStatus(@NotNull Reservation reservation) {
 
-        if (reservation.getStatus() == null) {
-            throw new IllegalStateException("Status cannot be null for reservation id: " + id);
+        if(reservation.getStatus() == Status.CANCELADO){
+            throw new Error("Empréstimo já está cancelado");
         }
 
-        switch (reservation.getStatus()) {
-            case SCHEDULED -> repository.changeStatus(id, Status.LOAN);
-            case LOAN -> repository.changeStatus(id, Status.COMPLETED);
-            case COMPLETED -> {
-            }
-            default -> throw new IllegalArgumentException("Invalid status: " + reservation.getStatus());
-        }
+        repository.update(reservation);
     }
 
     @Cacheable("reservations")
@@ -56,32 +48,34 @@ public class ReservationService {
         return repository.findAll();
     }
 
-    @Cacheable("reservation")
+    @Cacheable(value = "reservation", parameters = "id")
     public Optional<Reservation> findById(UUID id) {
         return repository.findById(id);
     }
 
     @Transactional
-    @CacheInvalidate(value = {"reservations", "reservation"})
+    @CacheInvalidate(value = "reservations", all = true)
     public Reservation save(Reservation entity) {
         return repository.save(entity);
     }
 
     @Transactional
-    @CacheInvalidate(value = {"reservations", "reservation"})
+    @CacheInvalidate(value = "reservations", all = true)
     public Reservation update(Reservation entity) {
         return repository.update(entity);
     }
 
     @Transactional
-    @CacheInvalidate(value = {"reservations", "reservation"})
+    @CacheInvalidate(value = "reservations", all = true)
     public void delete(Reservation entity) {
         repository.delete(entity);
     }
 
     @Transactional
-    @CacheInvalidate("reservations")
+    @CacheInvalidate(value = "reservations", all = true)
     public void deleteById(UUID id) {
         repository.deleteById(id);
     }
+
+
 }

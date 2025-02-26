@@ -47,5 +47,4 @@ public class User extends EntityPattern {
     )
     private Assignment assignment;
 
-
 }

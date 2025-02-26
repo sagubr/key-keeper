@@ -65,7 +65,7 @@ public class UserService extends GenericService<User, UUID> {
         user.setPassword(passwordEncoder.encode(temporaryPassword));
         User saved = repository.save(user);
         if (saved.isFirstAccess()) {
-            this.sendGridEmailService.send(saved.getEmail(), EmailTemplate.WELCOME.content(), Map.of("name", saved.getName(), "password", temporaryPassword)).subscribe();
+            this.sendGridEmailService.send(saved.getEmail(), EmailTemplate.BEM_VINDO, Map.of("name", saved.getName(), "password", temporaryPassword)).subscribe();
         }
         return saved;
     }

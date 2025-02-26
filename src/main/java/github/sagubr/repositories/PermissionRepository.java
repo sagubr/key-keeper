@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface PermissionRepository extends GenericRepository<Permission, java.util.UUID> {
 
-    List<Permission> findByRequesterId(UUID id);
+    List<Permission> findByRequestersId(UUID id);
 
 }

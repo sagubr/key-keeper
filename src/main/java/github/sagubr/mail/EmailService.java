@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface EmailService {
 
-    Mono<Boolean> send(String to, String templateName, Map<String, Object> params);
+    Mono<Boolean> send(String to, EmailTemplate templateName, Map<String, Object> params);
 
 }

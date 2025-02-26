@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,8 +31,7 @@ public class Assignment extends EntityPattern {
             joinColumns = @JoinColumn(name = "assignment_id")
     )
     @Enumerated(EnumType.STRING)
-    @Column(name = "screen")
-    private Set<Screen> screens;
+    private Set<Screen> screens = new HashSet<>();
 
 }
 

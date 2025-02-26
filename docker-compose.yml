@@ -10,6 +10,7 @@ services:
             - DATASOURCES_DEFAULT_PASSWORD=postgres
         depends_on:
             - db
+            - mongodb  # Dependência do MongoDB
 
     db:
         image: postgres:16
@@ -19,3 +20,23 @@ services:
             POSTGRES_PASSWORD: postgres
         ports:
             - "5433:5432"
+        networks:
+            - mongo_network  # Conectar com a rede do MongoDB
+
+    mongodb:
+        image: mongo:6.0
+        container_name: mongodb
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongodb_data:/data/db
+        networks:
+            - mongo_network  # Conectar com a rede do PostgreSQL e da aplicação
+
+volumes:
+    mongodb_data:
+        driver: local
+
+networks:
+    mongo_network:
+        driver: bridge

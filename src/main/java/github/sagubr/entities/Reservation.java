@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -25,7 +25,23 @@ public class Reservation extends EntityPattern {
             foreignKey = @ForeignKey(name = "fk_reservation_permission"),
             nullable = false
     )
-    private Permission permission;
+    private Permission permissions;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "requester_id",
+            foreignKey = @ForeignKey(name = "fk_reservation_requester"),
+            nullable = false
+    )
+    private Requester requester;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "location_id",
+            foreignKey = @ForeignKey(name = "fk_reservation_location"),
+            nullable = false
+    )
+    private Location location;
 
     @ManyToOne
     @JoinColumn(
@@ -51,4 +67,22 @@ public class Reservation extends EntityPattern {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
+
+    @Column(name = "notification_sent", nullable = false)
+    private boolean notificationSent = false;
+
+    public boolean isOverdue() {
+        return ZonedDateTime.now().isAfter(this.endDateTime);
+    }
+
+    public String getStartDateTimeFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        return startDateTime != null ? startDateTime.format(formatter) : null;
+    }
+
+    public String getEndDateTimeFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        return endDateTime != null ? endDateTime.format(formatter) : null;
+    }
+
 }

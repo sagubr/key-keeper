@@ -20,30 +20,38 @@ asciidoctor {
 }
 
 dependencies {
-    /* Data */
+
+    /* Postgres */
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
+
+    /* Liquibase */
     implementation("io.micronaut.liquibase:micronaut-liquibase")
+
+//    /*mongoDB*/
+//    annotationProcessor("io.micronaut.data:micronaut-data-document-processor")
+//    implementation("io.micronaut.data:micronaut-data-mongodb")
+//    runtimeOnly("org.mongodb:mongodb-driver-sync")
 
     /* Openapi */
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
 
     /*Lombok */
-    compileOnly ("org.projectlombok:lombok:1.18.34")
-    annotationProcessor ("org.projectlombok:lombok:1.18.34")
-    testCompileOnly ("org.projectlombok:lombok:1.18.34")
-    testAnnotationProcessor ("org.projectlombok:lombok:1.18.34")
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+    testCompileOnly("org.projectlombok:lombok:1.18.34")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
 
     /*Security */
     implementation("io.micronaut.security:micronaut-security-jwt")
-    implementation ("org.springframework.security:spring-security-core:6.3.1")
+    implementation("org.springframework.security:spring-security-core:6.3.1")
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     aotPlugins("io.micronaut.security:micronaut-security-aot")
 
-    /* Mapstruct */
+    /* MapStruct */
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
@@ -61,6 +69,7 @@ dependencies {
     implementation("io.micronaut.cache:micronaut-cache-core")
     implementation("io.micronaut.cache:micronaut-cache-caffeine")
 
+    /* reactor*/
     implementation("io.micronaut.reactor:micronaut-reactor")
 
     /* logging */
@@ -68,6 +77,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:0.9.26'
     runtimeOnly("ch.qos.logback:logback-classic")
 
+    /* yml micronaut */
     runtimeOnly("org.yaml:snakeyaml")
     aotPlugins platform("io.micronaut.platform:micronaut-platform:4.5.0")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")

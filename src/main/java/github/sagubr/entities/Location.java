@@ -50,7 +50,9 @@ public class Location extends EntityPattern {
 
     private Integer maxCapacity;
 
-    private boolean isRestricted;
+    private boolean isPublic = false;
+
+    private boolean isRestricted = false;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "UTC")
     private ZonedDateTime openingTime;

@@ -14,13 +14,10 @@ import java.util.UUID;
 @Repository
 public interface ReservationRepository extends GenericRepository<Reservation, java.util.UUID> {
 
-    List<Reservation> findByStatus(Status status);
+    List<Reservation> findByStatusIn(List<Status> status);
 
     @Query(value = "UPDATE reservations r SET r.active = :active WHERE r.id = :id"
             , nativeQuery = true)
     void updateActive(@Id UUID id, boolean active);
-
-    @Query("UPDATE Reservation r SET r.status = :status WHERE r.id = :id")
-    void changeStatus(UUID id, Status status);
 
 }

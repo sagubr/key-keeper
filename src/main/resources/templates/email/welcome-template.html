@@ -1,13 +1,40 @@
+<script>
+    function copyPassword() {
+        const password = document.getElementById('password').textContent;
+        navigator.clipboard.writeText(password).then(() => {
+            alert('Senha copiada para a área de transferência!');
+        }).catch(err => {
+            alert('Erro ao copiar a senha. Por favor, copie manualmente.');
+        });
+    }
+</script>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo!</title>
 </head>
-<body>
-<h1>Bem-vindo, <span th:text="${name}"></span>!</h1>
-<p>Estamos felizes em tê-lo conosco.</p>
-<p>Essa é a sua senha para o primeiro acesso <span th:text="${password}"></span></p>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f9f9f9;">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <tr>
+        <td style="padding: 20px; text-align: center;">
+            <h1 style="color: #2c3e50;">Bem-vindo, <span th:text="${name}"></span>!</h1>
+            <p style="font-size: 16px;">Estamos muito felizes em tê-lo(a) conosco.</p>
+
+            <div style="margin: 20px 0; padding: 15px; background-color: #ecf0f1; border-radius: 5px;">
+                <p style="margin: 0; font-weight: bold;">Sua senha para o primeiro acesso:</p>
+                <p id="password" style="margin: 10px 0; font-size: 18px; color: #e74c3c;" th:text="${password}"></p>
+                <button onclick="copyPassword()" style="padding: 8px 16px; font-size: 14px; color: #fff; background-color: #3498db; border: none; border-radius: 5px; cursor: pointer;">Copiar senha</button>
+            </div>
+
+            <p style="font-size: 14px; color: #7f8c8d;">Recomendamos que você altere sua senha após o primeiro login para garantir sua segurança.</p>
+
+            <a href="http://localhost:4200/" style="display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #3498db; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Acessar o sistema</a>
+
+            <p style="margin-top: 30px; font-size: 12px; color: #bdc3c7;">Se você não reconhece este e-mail, por favor, ignore-o.</p>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

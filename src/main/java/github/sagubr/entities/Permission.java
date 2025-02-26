@@ -1,6 +1,5 @@
 package github.sagubr.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
@@ -9,9 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,23 +19,21 @@ import java.util.Date;
 @Serdeable
 public class Permission extends EntityPattern {
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(
-            name = "location_id",
-            foreignKey = @ForeignKey(name = "fk_permission_location"),
-            nullable = false
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "permission_location",
+            joinColumns = @JoinColumn(name = "permission_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id")
     )
-    private Location location;
+    private List<Location> locations;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(
-            name = "requester_id",
-            foreignKey = @ForeignKey(name = "fk_permission_requester"),
-            nullable = false
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "permission_requester",
+            joinColumns = @JoinColumn(name = "permission_id"),
+            inverseJoinColumns = @JoinColumn(name = "requester_id")
     )
-    private Requester requester;
+    private List<Requester> requesters;
 
     @ManyToOne
     @JoinColumn(

@@ -1,20 +1,16 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.Permission;
-import github.sagubr.entities.Requester;
 import github.sagubr.repositories.PermissionRepository;
-import github.sagubr.repositories.ReservationRepository;
 import io.micronaut.cache.annotation.CacheInvalidate;
 import io.micronaut.cache.annotation.Cacheable;
 import io.micronaut.data.exceptions.EmptyResultException;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.transaction.annotation.Transactional;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +40,7 @@ public class PermissionService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "location-cache", all = true)
+    @CacheInvalidate(value = "permission-cache", all = true)
     public Permission save(@NotNull Permission entity) {
         try {
             return repository.save(entity);
@@ -54,7 +50,7 @@ public class PermissionService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "location-cache", all = true)
+    @CacheInvalidate(value = "permission-cache", all = true)
     public void deleteById(@NotBlank @NotNull UUID id) {
         try {
             repository.deleteById(id);
@@ -64,7 +60,7 @@ public class PermissionService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "location-cache", all = true)
+    @CacheInvalidate(value = "permission-cache", all = true)
     public void delete(@NotNull Permission entity) {
         try {
             repository.delete(entity);
@@ -74,7 +70,7 @@ public class PermissionService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "location-cache", all = true)
+    @CacheInvalidate(value = "permission-cache", all = true)
     public Permission update(@NotNull Permission entity) {
         try {
             return repository.update(entity);
@@ -84,8 +80,9 @@ public class PermissionService {
     }
 
     @Transactional
+    @Cacheable(value = "permission-cache", parameters = "id")
     public List<Permission> findByRequesterId(UUID id) {
-        return this.repository.findByRequesterId(id);
+        return this.repository.findByRequestersId(id);
     }
 
 }

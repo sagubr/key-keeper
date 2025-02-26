@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso de Devolução de Chave</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    h1 {
+      color: #d32f2f;
+    }
+    .info {
+      margin: 20px 0;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #1565c0;
+    }
+    .warning {
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Aviso de Devolução de Chave</h1>
+  <p>Olá, <span th:text="${name}" class="highlight"></span>,</p>
+
+  <p>Identificamos que a chave abaixo ainda não foi devolvida:</p>
+
+  <div class="info">
+<!--    <p><strong>Código da Chave:</strong> <span th:text="${keyCode}" class="highlight"></span></p>-->
+    <p><strong>Sala:</strong> <span th:text="${room}" class="highlight"></span></p>
+    <p><strong>Data de Início da Reserva:</strong> <span th:text="${startDate}" class="highlight"></span></p>
+    <p><strong>Data de Término da Reserva:</strong> <span th:text="${endDate}" class="highlight"></span></p>
+  </div>
+
+  <p class="warning">Atenção: Caso a chave não seja devolvida em até 7 dias, seu acesso ao sistema será bloqueado.</p>
+
+  <p>Pedimos que realize a devolução o mais breve possível para evitar transtornos.</p>
+
+  <div class="footer">
+    <p>Atenciosamente,</p>
+    <p><strong>Equipe de Gestão de Chaves</strong></p>
+  </div>
+</div>
+</body>
+</html>
