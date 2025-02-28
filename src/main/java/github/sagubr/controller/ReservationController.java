@@ -2,9 +2,10 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
+import github.sagubr.commands.ReservationChangeStatusCommand;
+import github.sagubr.commands.ReservationCommand;
 import github.sagubr.entities.Reservation;
 import github.sagubr.entities.Status;
-import github.sagubr.entities.User;
 import github.sagubr.services.ReservationService;
 import github.sagubr.services.UserService;
 import io.micronaut.http.annotation.*;
@@ -46,17 +47,15 @@ public class ReservationController {
     @Operation(summary = "Obter todas as reservas filtradas por status")
     @DefaultResponses
     @Get("/status")
-    public List<Reservation> findAllByStatusReservation(@QueryValue List<Status> status) {
-        return service.findByStatus(status);
+    public List<Reservation> findByActiveTrueAndStatusIn(@QueryValue List<Status> status) {
+        return service.findByActiveTrueAndStatusIn(status);
     }
 
     @Operation(summary = "Criar nova reserva")
     @DefaultResponses
     @Post("/save")
-    public Reservation createReservation(@Body @Valid Reservation reservation, Principal principal) {
-        User user = userService.findByUsername(principal).orElseThrow();
-        reservation.setUser(user);
-        return service.save(reservation);
+    public Reservation createReservation(@Body @Valid ReservationCommand command, Principal principal) {
+        return service.save(command, principal);
     }
 
     @Operation(summary = "Atualizar uma reserva")
@@ -75,9 +74,9 @@ public class ReservationController {
 
     @Operation(summary = "Atualizar status de uma reserva")
     @DefaultResponses
-    @Put("/change-status")
-    public void changeStatusReservation(@Body @Valid Reservation reservation) {
-        service.changeStatus(reservation);
+    @Post("/change-status")
+    public void changeStatusReservation(@Body @Valid ReservationChangeStatusCommand command) {
+        service.changeStatus(command);
     }
 
     @Operation(summary = "Atualizar campo ativo de uma reserva")

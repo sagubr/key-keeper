@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "reservations")
 @Serdeable
@@ -22,10 +22,9 @@ public class Reservation extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "permission_id",
-            foreignKey = @ForeignKey(name = "fk_reservation_permission"),
-            nullable = false
+            foreignKey = @ForeignKey(name = "fk_reservation_permission")
     )
-    private Permission permissions;
+    private Permission permission;
 
     @ManyToOne
     @JoinColumn(
@@ -46,8 +45,8 @@ public class Reservation extends EntityPattern {
     @ManyToOne
     @JoinColumn(
             name = "user_id",
-            foreignKey = @ForeignKey(name = "fk_reservation_user"),
-            nullable = false)
+            foreignKey = @ForeignKey(name = "fk_reservation_user")
+    )
     private User user;
 
     @Column(columnDefinition = "TEXT")

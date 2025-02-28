@@ -1,6 +1,7 @@
 package github.sagubr.security;
 
-import github.sagubr.models.UserDto;
+import github.sagubr.entities.Permissions;
+import github.sagubr.models.UserAuthenticateDto;
 import github.sagubr.services.UserService;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.annotation.Value;
@@ -15,7 +16,10 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Singleton
 @Requires(beans = UserService.class)
@@ -49,12 +53,18 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
         }
 
         try {
-            Optional<UserDto> userOptional = userService.findByUsername(identity);
+            Optional<UserAuthenticateDto> userOptional = userService.findByUsername(identity);
 
             if (userOptional.isPresent()) {
-                UserDto user = userOptional.get();
+                UserAuthenticateDto user = userOptional.get();
                 if (passwordEncoder.matches(secret, user.password())) {
-                    return AuthenticationResponse.success(identity, Collections.singletonList(user.assignment().toString()));
+                    Set<Permissions> roles = user.assignment().getPermissions();
+
+                    List<String> roleNames = roles.stream()
+                            .map(Enum::name)
+                            .collect(Collectors.toList());
+
+                    return AuthenticationResponse.success(identity, roleNames);
                 }
             }
             return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);

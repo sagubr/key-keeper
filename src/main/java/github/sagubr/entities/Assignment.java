@@ -3,17 +3,16 @@ package github.sagubr.entities;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "assignment", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name", name = "unique_name")
@@ -25,13 +24,13 @@ public class Assignment extends EntityPattern {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ElementCollection(targetClass = Screen.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Permissions.class, fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "assignment_screens",
+            name = "assignment_permissions",
             joinColumns = @JoinColumn(name = "assignment_id")
     )
     @Enumerated(EnumType.STRING)
-    private Set<Screen> screens = new HashSet<>();
+    private Set<Permissions> permissions = new HashSet<>();
 
 }
 

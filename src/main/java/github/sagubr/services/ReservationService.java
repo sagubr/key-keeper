@@ -1,7 +1,11 @@
 package github.sagubr.services;
 
+import github.sagubr.commands.ReservationChangeStatusCommand;
+import github.sagubr.commands.ReservationCommand;
+import github.sagubr.entities.Permission;
 import github.sagubr.entities.Reservation;
 import github.sagubr.entities.Status;
+import github.sagubr.entities.User;
 import github.sagubr.repositories.ReservationRepository;
 import io.micronaut.cache.annotation.CacheInvalidate;
 import io.micronaut.cache.annotation.Cacheable;
@@ -11,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,11 +24,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final ReservationRepository repository;
 
-    @Cacheable(value = "reservations-status", parameters = "status")
-    public List<Reservation> findByStatus(List<Status> status) {
-        return this.repository.findByStatusIn(status);
+    private final ReservationRepository repository;
+    private final PermissionService permissionService;
+    private final UserService userService;
+
+    @Cacheable(value = "reservations", parameters = "status")
+    public List<Reservation> findByActiveTrueAndStatusIn(List<Status> status) {
+        return this.repository.findByActiveTrueAndStatusIn(status);
     }
 
     @Transactional
@@ -34,13 +42,11 @@ public class ReservationService {
 
     @Transactional
     @CacheInvalidate(value = "reservations", all = true)
-    public void changeStatus(@NotNull Reservation reservation) {
-
-        if(reservation.getStatus() == Status.CANCELADO){
-            throw new Error("Empréstimo já está cancelado");
-        }
-
-        repository.update(reservation);
+    public void changeStatus(@NotNull ReservationChangeStatusCommand command) {
+        Reservation reservation =
+                repository.findById(command.getReservationId()).orElseThrow(EntityNotFoundException::new);
+        reservation.setStatus(command.getStatus());
+        repository.save(reservation);
     }
 
     @Cacheable("reservations")
@@ -48,15 +54,33 @@ public class ReservationService {
         return repository.findAll();
     }
 
-    @Cacheable(value = "reservation", parameters = "id")
+    @Cacheable(value = "reservations", parameters = "id")
     public Optional<Reservation> findById(UUID id) {
         return repository.findById(id);
     }
 
     @Transactional
     @CacheInvalidate(value = "reservations", all = true)
-    public Reservation save(Reservation entity) {
-        return repository.save(entity);
+    public Reservation save(ReservationCommand command, Principal principal) {
+
+        User user = userService.findByUsername(principal).orElseThrow();
+        Permission permission = null;
+
+        if(!command.getPermission().location().isPublicAccess()){
+            permission = permissionService.findById(command.getPermission().permissionId());
+        }
+
+        Reservation reservation = Reservation.builder()
+                .user(user)
+                .location(command.getPermission().location())
+                .requester(command.getRequester())
+                .permission(permission)
+                .status(command.getStatus())
+                .startDateTime(command.getStartDateTime())
+                .endDateTime(command.getEndDateTime())
+                .build();
+
+        return repository.save(reservation);
     }
 
     @Transactional

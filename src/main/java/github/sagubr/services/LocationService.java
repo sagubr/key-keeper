@@ -69,4 +69,16 @@ public class LocationService {
         }
     }
 
+    public List<Location> findByRestrictedFalseAndPublicFalse() {
+        return repository.findByRestrictedFalseAndPublicAccessFalse();
+    }
+
+    public List<Location> findByRestrictedFalseAndPublicTrue() {
+        return repository.findByRestrictedFalseAndPublicAccessTrue();
+    }
+
+    public List<Location> findByResponsiblesId(UUID requesterId) {
+        return repository.findByResponsiblesId(requesterId);
+    }
+
 }

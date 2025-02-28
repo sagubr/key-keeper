@@ -18,7 +18,13 @@ public interface LocationRepository extends GenericRepository<Location, UUID> {
                 LEFT JOIN l.responsibles r
                 WHERE l.id = :locationId
             """)
-    List<String> findResponsiblesByLocationIds(UUID locationId);
+    List<String> findIsResponsiblesByLocationIds(UUID locationId);
+
+    List<Location> findByRestrictedFalseAndPublicAccessFalse();
+
+    List<Location> findByRestrictedFalseAndPublicAccessTrue();
+
+    List<Location> findByResponsiblesId(UUID requesterId);
 
 }
 

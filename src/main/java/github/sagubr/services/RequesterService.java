@@ -21,24 +21,20 @@ public class RequesterService {
 
     @ReadOnly
     @Transactional
-    @Cacheable("requester-cache")
+    @Cacheable("requesters")
     public List<Requester> findAll() throws EmptyResultException {
-        List<Requester> result = repository.findAll();
-        if (result.isEmpty()) {
-            throw new EmptyResultException();
-        }
-        return result;
+        return repository.findAll();
     }
 
     @ReadOnly
     @Transactional
-    @Cacheable(value = "requester-cache", parameters = "id")
+    @Cacheable(value = "requesters", parameters = "id")
     public Requester findById(UUID id) {
         return repository.findById(id).orElseThrow(EmptyResultException::new);
     }
 
     @Transactional
-    @CacheInvalidate(value = "requester-cache", all = true)
+    @CacheInvalidate(value = "requesters", all = true)
     public Requester save(Requester entity) {
         try {
             return repository.save(entity);
@@ -48,7 +44,7 @@ public class RequesterService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "requester-cache", all = true)
+    @CacheInvalidate(value = "requesters", all = true)
     public Requester update(Requester entity) {
         try {
             return repository.update(entity);
@@ -58,7 +54,7 @@ public class RequesterService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "requester-cache", all = true)
+    @CacheInvalidate(value = "requesters", all = true)
     public void deleteById(UUID id) {
         try {
             repository.deleteById(id);
@@ -68,7 +64,7 @@ public class RequesterService {
     }
 
     @Transactional
-    @CacheInvalidate(value = "requester-cache", all = true)
+    @CacheInvalidate(value = "requesters", all = true)
     public void delete(Requester entity) {
         try {
             repository.delete(entity);
@@ -77,10 +73,16 @@ public class RequesterService {
         }
     }
 
-    @ReadOnly
-    @Transactional
-    @Cacheable("requester-cache")
+    @Transactional(readOnly = true)
+    @Cacheable("requesters")
     public List<Requester> findAllByResponsibleTrue() {
-        return repository.findAllByResponsibleTrue();
+        return repository.findByResponsibleTrue();
     }
+
+    @Transactional(readOnly = true)
+    @Cacheable("requesters")
+    public List<Requester> findByBlockedFalse() {
+        return repository.findByBlockedFalse();
+    }
+
 }

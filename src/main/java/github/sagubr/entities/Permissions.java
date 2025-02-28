@@ -5,7 +5,13 @@ import lombok.Getter;
 
 @Getter
 @Serdeable
-public enum Screen {
+public enum Permissions {
+
+    MENU_EMPRESTIMOS,
+    MENU_AUTORIZACOES,
+    MENU_RECURSOS,
+    MENU_PARAMETRIZACOES,
+    MENU_GESTAO_ACESSOS,
 
     EMPRESTIMOS,
     HISTORICO,

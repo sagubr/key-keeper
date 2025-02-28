@@ -54,4 +54,9 @@ public class Permission extends EntityPattern {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "UTC")
     @Column(nullable = false)
     private ZonedDateTime endDateTime;
+
+    public boolean isOverdue() {
+        return ZonedDateTime.now().isAfter(this.endDateTime);
+    }
+
 }

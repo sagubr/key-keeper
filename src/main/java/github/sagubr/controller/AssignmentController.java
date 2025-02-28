@@ -1,6 +1,7 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
+import github.sagubr.commands.AssignmentCommand;
 import github.sagubr.entities.Assignment;
 import github.sagubr.services.AssignmentService;
 import io.micronaut.http.annotation.Body;
@@ -36,6 +37,13 @@ public class AssignmentController {
     @Post(value = "/save")
     public Assignment createAssignment(@Body @Valid Assignment assignment) {
         return service.save(assignment);
+    }
+
+    @Operation(summary = "Criar novo registro na classe atribuição")
+    @DefaultResponses
+    @Post(value = "/update")
+    public Assignment updateAssignmentId(@Body @Valid AssignmentCommand command) {
+        return service.update(command);
     }
 
 }

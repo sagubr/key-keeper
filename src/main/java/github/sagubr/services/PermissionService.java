@@ -1,6 +1,8 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.Permission;
+import github.sagubr.mappers.PermissionMapper;
+import github.sagubr.models.PermissionLocationSummaryDto;
 import github.sagubr.repositories.PermissionRepository;
 import io.micronaut.cache.annotation.CacheInvalidate;
 import io.micronaut.cache.annotation.Cacheable;
@@ -12,14 +14,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Singleton
 @RequiredArgsConstructor
 public class PermissionService {
 
     private final PermissionRepository repository;
+    private final PermissionMapper mapper;
 
     @ReadOnly
     @Transactional
@@ -81,8 +86,13 @@ public class PermissionService {
 
     @Transactional
     @Cacheable(value = "permission-cache", parameters = "id")
-    public List<Permission> findByRequesterId(UUID id) {
-        return this.repository.findByRequestersId(id);
+    public List<PermissionLocationSummaryDto> findByRequestersIdAndEndDateTimeAfterAndActiveTrue(UUID id, ZonedDateTime now) {
+        List<Permission> permissions = repository.findByRequestersIdAndEndDateTimeAfterAndActiveTrue(id, now);
+        List<PermissionLocationSummaryDto> permissionLocationSummaryDtos =
+                permissions.stream()
+                        .flatMap(permission -> mapper.mapDistinctLocationSummaries(permission).stream())
+                        .collect(Collectors.toList());
+        return permissionLocationSummaryDtos.stream().distinct().collect(Collectors.toList());
     }
 
 }

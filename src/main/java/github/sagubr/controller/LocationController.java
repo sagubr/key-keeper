@@ -29,7 +29,7 @@ public class LocationController {
         return service.findAll();
     }
 
-    @Operation(summary = "Obter todos os registros da classe localização filtrados por id")
+    @Operation(summary = "Obter todos os registros da classe localização filtrados por permissionId")
     @DefaultResponses
     @Get("/{id}")
     public Location findByIdLocation(@PathVariable UUID id) {
@@ -41,6 +41,27 @@ public class LocationController {
     @Post(value = "/save")
     public Location createLocation(@Body @Valid Location location) {
         return service.save(location);
+    }
+
+    @Operation(summary = "Obter todos os registros da classe localização que não sejam restritos e que sejam publicos")
+    @DefaultResponses
+    @Get(value = "/public")
+    public List<Location> findByRestrictedFalseAndPublicTrue() {
+        return service.findByRestrictedFalseAndPublicTrue();
+    }
+
+    @Operation(summary = "Obter todos os registros da classe localização que não sejam restritos e que não sejam publicos")
+    @DefaultResponses
+    @Get(value = "/not-restricted")
+    public List<Location> findByRestrictedFalseAndPublicFalse() {
+        return service.findByRestrictedFalseAndPublicFalse();
+    }
+
+    @Operation(summary = "Obter todos os registros da classe localização filtrados por requesterId")
+    @DefaultResponses
+    @Get("/responsible/{requesterId}")
+    public List<Location> findByResponsiblesId(@PathVariable UUID requesterId) {
+        return service.findByResponsiblesId(requesterId);
     }
 
 }

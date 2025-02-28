@@ -1,9 +1,10 @@
 package github.sagubr.services;
 
 import github.sagubr.entities.User;
+import github.sagubr.exceptions.UserNotFoundException;
 import github.sagubr.mail.EmailTemplate;
 import github.sagubr.mail.SendGridEmailService;
-import github.sagubr.models.UserDto;
+import github.sagubr.models.UserAuthenticateDto;
 import github.sagubr.mappers.UserMapper;
 import github.sagubr.models.UserSummaryDto;
 import github.sagubr.repositories.UserRepository;
@@ -46,17 +47,16 @@ public class UserService extends GenericService<User, UUID> {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserDto> findByUsername(String username) {
+    public Optional<UserAuthenticateDto> findByUsername(String username) {
         return Optional.of(repository.findByUsername(username)
                         .orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found")))
                 .map(mapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> findByUsername(Principal principal) {
+    public Optional<User> findByUsername(Principal principal) throws UserNotFoundException {
         String username = principal.getName();
-        return Optional.of(repository.findByUsername(username)
-                .orElseThrow(() -> new NoSuchElementException("User with username " + username + " not found")));
+        return Optional.ofNullable(repository.findByUsername(username)).orElseThrow();
     }
 
     @Transactional

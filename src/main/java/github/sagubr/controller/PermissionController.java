@@ -1,8 +1,10 @@
 package github.sagubr.controller;
 
 import github.sagubr.annotations.DefaultResponses;
+import github.sagubr.entities.Location;
 import github.sagubr.entities.Permission;
 import github.sagubr.entities.Requester;
+import github.sagubr.models.PermissionLocationSummaryDto;
 import github.sagubr.services.PermissionService;
 import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
@@ -14,6 +16,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,11 +42,11 @@ public class PermissionController {
         return service.findById(id);
     }
 
-    @Operation(summary = "Obter todas as permissões por solicitante")
+    @Operation(summary = "Obter todas as permissões por solicitantes")
     @DefaultResponses
-    @Post("/requester")
-    public List<Permission> findByRequesterPermission(@Body @Valid Requester requester) {
-        return service.findByRequesterId(requester.getId());
+    @Get("/requester/{id}")
+    public List<PermissionLocationSummaryDto> findByRequestersIdAndEndDateTimeAfter(@PathVariable @NotBlank @NotNull UUID id) {
+        return service.findByRequestersIdAndEndDateTimeAfterAndActiveTrue(id, ZonedDateTime.now());
     }
 
     @Operation(summary = "Criar uma nova permissão")
@@ -73,4 +76,5 @@ public class PermissionController {
     public void deletePermission(@Body @Valid Permission permission) {
         service.delete(permission);
     }
+
 }

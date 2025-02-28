@@ -1,10 +1,9 @@
 package github.sagubr.services;
 
+import github.sagubr.commands.AssignmentCommand;
 import github.sagubr.entities.Assignment;
 import github.sagubr.repositories.AssignmentRepository;
-import github.sagubr.repositories.GenericRepository;
 import io.micronaut.data.exceptions.EmptyResultException;
-import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotBlank;
@@ -20,8 +19,7 @@ public class AssignmentService {
 
     protected final AssignmentRepository repository;
 
-    @ReadOnly
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Assignment> findAll() throws EmptyResultException {
         List<Assignment> result = repository.findAll();
         if (result.isEmpty()) {
@@ -30,8 +28,7 @@ public class AssignmentService {
         return result;
     }
 
-    @ReadOnly
-    @Transactional
+    @Transactional(readOnly = true)
     public Assignment findById(@NotBlank @NotNull UUID id) throws EmptyResultException {
         return repository.findById(id).orElseThrow(() -> new EmptyResultException());
     }
@@ -46,27 +43,12 @@ public class AssignmentService {
     }
 
     @Transactional
-    public void deleteById(@NotBlank @NotNull UUID id) {
+    public Assignment update(@NotNull AssignmentCommand command) {
         try {
-            repository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while deleting the record with ID: " + id, e);
-        }
-    }
-
-    @Transactional
-    public void delete(@NotNull Assignment entity) {
-        try {
-            repository.delete(entity);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while deleting the entity.", e);
-        }
-    }
-
-    @Transactional
-    public Assignment update(@NotNull Assignment entity) {
-        try {
-            return repository.update(entity);
+            Assignment assignment = repository.findById(command.getAssignmentId()).orElseThrow(() -> new EmptyResultException());
+            assignment.setName(command.getName());
+            assignment.setPermissions(command.getPermissions());
+            return repository.save(assignment);
         } catch (Exception e) {
             throw new RuntimeException("An error occurred while updating the entity.", e);
         }

@@ -36,6 +36,13 @@ public class RequesterController {
         return service.findAllByResponsibleTrue();
     }
 
+    @Operation(summary = "Obter todos os registros da classe solicitantes filtrados por bloqueado=false")
+    @DefaultResponses
+    @Get("/blocked-false")
+    public List<Requester> findByBlockedFalse() {
+        return service.findByBlockedFalse();
+    }
+
     @Operation(summary = "Obter um solicitante pelo ID")
     @DefaultResponses
     @Get("/{id}")

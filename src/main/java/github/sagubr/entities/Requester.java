@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -45,10 +44,10 @@ public class Requester extends EntityPattern {
 
     @NotNull
     @Column(nullable = false)
-    private boolean isResponsible = false;
+    private boolean responsible = false;
 
     @NotNull
     @Column(nullable = false)
-    private boolean isBlocked = false;
+    private boolean blocked = false;
 
 }
