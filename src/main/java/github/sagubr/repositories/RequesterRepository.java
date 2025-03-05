@@ -16,8 +16,10 @@ import java.util.UUID;
 public interface RequesterRepository extends JpaRepository<Requester, UUID> {
 
 
-    List<Requester> findByResponsibleTrue();
+    @Query("SELECT r FROM Requester r WHERE r.responsible = true")
+    List<Requester> findResponsibleTrue();
 
-    List<Requester> findByBlockedFalse();
+    @Query("SELECT r FROM Requester r WHERE r.blocked = false")
+    List<Requester> findBlockedFalse();
 
 }

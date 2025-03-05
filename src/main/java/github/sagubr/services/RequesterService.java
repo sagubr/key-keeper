@@ -76,13 +76,13 @@ public class RequesterService {
     @Transactional(readOnly = true)
     @Cacheable("requesters")
     public List<Requester> findAllByResponsibleTrue() {
-        return repository.findByResponsibleTrue();
+        return repository.findResponsibleTrue();
     }
 
     @Transactional(readOnly = true)
     @Cacheable("requesters")
     public List<Requester> findByBlockedFalse() {
-        return repository.findByBlockedFalse();
+        return repository.findBlockedFalse();
     }
 
 }

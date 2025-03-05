@@ -9,6 +9,7 @@ public enum Status {
 
     EMPRESTIMO,
     AGENDADO,
+    ATRASADO,
     CANCELADO,
     CONCLUIDO;
 

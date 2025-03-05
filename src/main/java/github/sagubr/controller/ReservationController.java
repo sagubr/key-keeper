@@ -4,6 +4,7 @@ package github.sagubr.controller;
 import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.commands.ReservationChangeStatusCommand;
 import github.sagubr.commands.ReservationCommand;
+import github.sagubr.commands.ReservationProlongationCommand;
 import github.sagubr.entities.Reservation;
 import github.sagubr.entities.Status;
 import github.sagubr.services.ReservationService;
@@ -28,13 +29,12 @@ import java.util.UUID;
 public class ReservationController {
 
     private final ReservationService service;
-    private final UserService userService;
 
     @Operation(summary = "Obter todos os registros da classe reservas")
     @DefaultResponses
     @Get
-    public List<Reservation> findAllReservation() {
-        return service.findAll();
+    public List<Reservation> findByActiveTrueReservation() {
+        return service.findByActiveTrue();
     }
 
     @Operation(summary = "Obter reserva por ID")
@@ -61,8 +61,8 @@ public class ReservationController {
     @Operation(summary = "Atualizar uma reserva")
     @DefaultResponses
     @Put("/update/")
-    public Reservation updateReservation(@Body @Valid Reservation reservation) {
-        return service.update(reservation);
+    public Reservation updateReservation(@Body @Valid ReservationProlongationCommand command) {
+        return service.update(command);
     }
 
     @Operation(summary = "Excluir uma reserva por ID")

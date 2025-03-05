@@ -2,13 +2,12 @@ package github.sagubr.commands;
 
 import github.sagubr.entities.Permissions;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 

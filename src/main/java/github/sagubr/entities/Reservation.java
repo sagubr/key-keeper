@@ -1,13 +1,13 @@
 package github.sagubr.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import github.sagubr.utils.DateTimeUtils;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Builder
 @Getter
@@ -49,6 +49,14 @@ public class Reservation extends EntityPattern {
     )
     private User user;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "key_id",
+            foreignKey = @ForeignKey(name = "fk_reservation_key"),
+            nullable = false
+    )
+    private Key key;
+
     @Column(columnDefinition = "TEXT")
     private String notes;
 
@@ -67,21 +75,15 @@ public class Reservation extends EntityPattern {
     @Column(nullable = false)
     private Status status;
 
-    @Column(name = "notification_sent", nullable = false)
-    private boolean notificationSent = false;
+    @Column(name = "notification", nullable = false)
+    private boolean notification = false;
 
     public boolean isOverdue() {
         return ZonedDateTime.now().isAfter(this.endDateTime);
     }
 
-    public String getStartDateTimeFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        return startDateTime != null ? startDateTime.format(formatter) : null;
-    }
-
-    public String getEndDateTimeFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        return endDateTime != null ? endDateTime.format(formatter) : null;
+    public String getFormattedPeriod() {
+        return DateTimeUtils.formatPeriod(this.startDateTime, this.endDateTime);
     }
 
 }

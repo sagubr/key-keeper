@@ -1,6 +1,7 @@
 package github.sagubr.controller;
 
 import github.sagubr.exceptions.UserNotFoundException;
+import io.micronaut.data.exceptions.EmptyResultException;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
@@ -30,7 +31,21 @@ public class GlobalErrorController {
     @Error(global = true)
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<ApiError> handleEntityNotFoundException(EntityNotFoundException exception) {
-        ApiError apiError = new ApiError("NoSuchElementException", exception.getMessage());
+        ApiError apiError = new ApiError("EntityNotFoundException", exception.getMessage());
+        return HttpResponse.badRequest(apiError);
+    }
+
+    @Error(global = true)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse<ApiError> handleEmptyResultException(EmptyResultException exception) {
+        ApiError apiError = new ApiError("EmptyResultException", exception.getMessage());
+        return HttpResponse.badRequest(apiError);
+    }
+
+    @Error(global = true)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse<ApiError> handleIllegalStateException(IllegalStateException exception) {
+        ApiError apiError = new ApiError("IllegalStateException", exception.getMessage());
         return HttpResponse.badRequest(apiError);
     }
 

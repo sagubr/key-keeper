@@ -1,5 +1,6 @@
 package github.sagubr.commands;
 
+import github.sagubr.entities.Key;
 import github.sagubr.entities.Requester;
 import github.sagubr.entities.Status;
 import github.sagubr.models.PermissionLocationSummaryDto;
@@ -23,6 +24,9 @@ public class ReservationCommand {
 
     @NotNull
     private PermissionLocationSummaryDto permission;
+
+    @NotNull
+    private Key key;
 
     @NotNull
     private ZonedDateTime startDateTime;

@@ -15,10 +15,7 @@ import io.micronaut.security.authentication.provider.HttpRequestAuthenticationPr
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -49,7 +46,9 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
         String secret = authenticationRequest.getSecret();
 
         if (isSuperUser(identity, secret)) {
-            return AuthenticationResponse.success(identity, Collections.singletonList("SUPER_USER"));
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("name", "SUPER USUARIO");
+            return AuthenticationResponse.success(identity, Collections.singletonList("SUPER_USER"), attributes);
         }
 
         try {
@@ -59,12 +58,14 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
                 UserAuthenticateDto user = userOptional.get();
                 if (passwordEncoder.matches(secret, user.password())) {
                     Set<Permissions> roles = user.assignment().getPermissions();
-
                     List<String> roleNames = roles.stream()
                             .map(Enum::name)
                             .collect(Collectors.toList());
 
-                    return AuthenticationResponse.success(identity, roleNames);
+                    Map<String, Object> attributes = new HashMap<>();
+                    attributes.put("name", user.name());
+
+                    return AuthenticationResponse.success(identity, roleNames, attributes);
                 }
             }
             return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
@@ -72,6 +73,7 @@ public class AuthenticationProvider<B> implements HttpRequestAuthenticationProvi
             return AuthenticationResponse.failure(AuthenticationFailureReason.USER_NOT_FOUND);
         }
     }
+
 
     private boolean isSuperUser(String username, String password) {
         return username.equals(masterUsername) && password.equals(masterPassword);

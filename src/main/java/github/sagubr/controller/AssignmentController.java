@@ -28,8 +28,8 @@ public class AssignmentController {
     @Operation(summary = "Obter todos os registros da classe atribuição")
     @DefaultResponses
     @Get
-    public List<Assignment> findAllAssignment() {
-        return service.findAll();
+    public List<Assignment> findByActiveTrueAssignment() {
+        return service.findByActiveTrue();
     }
 
     @Operation(summary = "Criar novo registro na classe atribuição")
@@ -42,7 +42,7 @@ public class AssignmentController {
     @Operation(summary = "Criar novo registro na classe atribuição")
     @DefaultResponses
     @Post(value = "/update")
-    public Assignment updateAssignmentId(@Body @Valid AssignmentCommand command) {
+    public Assignment updateAssignment(@Body @Valid AssignmentCommand command) {
         return service.update(command);
     }
 

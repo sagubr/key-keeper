@@ -1,7 +1,8 @@
 package github.sagubr.notifications;
 
-import github.sagubr.entities.Reservation;
+import github.sagubr.entities.Notification;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public record NotifierEvent(Reservation reservation, String message) {}
+public record NotifierEvent(Notification notification) {
+}

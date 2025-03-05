@@ -32,6 +32,7 @@ public class KeyController {
         return service.findAll();
     }
 
+    //TODO: simplficar para enviar apenas UUID
     @Operation(summary = "Obter chaves por localização")
     @DefaultResponses
     @Post("/location")

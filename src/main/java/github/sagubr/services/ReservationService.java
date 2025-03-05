@@ -2,6 +2,7 @@ package github.sagubr.services;
 
 import github.sagubr.commands.ReservationChangeStatusCommand;
 import github.sagubr.commands.ReservationCommand;
+import github.sagubr.commands.ReservationProlongationCommand;
 import github.sagubr.entities.Permission;
 import github.sagubr.entities.Reservation;
 import github.sagubr.entities.Status;
@@ -16,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 import java.security.Principal;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,8 +52,8 @@ public class ReservationService {
     }
 
     @Cacheable("reservations")
-    public List<Reservation> findAll() {
-        return repository.findAll();
+    public List<Reservation> findByActiveTrue() {
+        return repository.findByActiveTrue();
     }
 
     @Cacheable(value = "reservations", parameters = "id")
@@ -66,14 +68,26 @@ public class ReservationService {
         User user = userService.findByUsername(principal).orElseThrow();
         Permission permission = null;
 
-        if(!command.getPermission().location().isPublicAccess()){
+        if (!command.getPermission().location().isPublicAccess()) {
             permission = permissionService.findById(command.getPermission().permissionId());
+        }
+
+        boolean existsConflict = repository.existsByLocationAndPeriodOverlap(
+                command.getPermission().location(),
+                command.getStartDateTime(),
+                command.getEndDateTime(),
+                List.of(Status.AGENDADO, Status.EMPRESTIMO)
+        );
+
+        if (existsConflict) {
+            throw new IllegalStateException("Já existe uma reserva para este período e local.");
         }
 
         Reservation reservation = Reservation.builder()
                 .user(user)
                 .location(command.getPermission().location())
                 .requester(command.getRequester())
+                .key(command.getKey())
                 .permission(permission)
                 .status(command.getStatus())
                 .startDateTime(command.getStartDateTime())
@@ -85,8 +99,20 @@ public class ReservationService {
 
     @Transactional
     @CacheInvalidate(value = "reservations", all = true)
-    public Reservation update(Reservation entity) {
-        return repository.update(entity);
+    public Reservation update(ReservationProlongationCommand command) {
+        Reservation reservation = repository.findById(command.getReservationId()).orElseThrow();
+        reservation.setStartDateTime(command.getStartDateTime());
+        reservation.setEndDateTime(command.getEndDateTime());
+        return repository.save(reservation);
+    }
+
+    @Transactional
+    @CacheInvalidate(value = "reservations", all = true)
+    public Reservation notificationTrue(UUID reservationId) {
+        Reservation reservation = repository.findById(reservationId).orElseThrow();
+        reservation.setNotification(true);
+        reservation.setStatus(Status.ATRASADO);
+        return repository.save(reservation);
     }
 
     @Transactional
@@ -101,5 +127,12 @@ public class ReservationService {
         repository.deleteById(id);
     }
 
+    public List<Reservation> findByNotificationFalse() {
+        return repository.findByNotificationFalse();
+    }
+
+    public List<Reservation> findByNotificationFalseAndStatusAndEndDateTimeBefore() {
+        return repository.findByNotificationFalseAndStatusAndEndDateTimeBefore(Status.EMPRESTIMO, ZonedDateTime.now());
+    }
 
 }

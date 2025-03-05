@@ -20,11 +20,9 @@ public class AssignmentService {
     protected final AssignmentRepository repository;
 
     @Transactional(readOnly = true)
-    public List<Assignment> findAll() throws EmptyResultException {
-        List<Assignment> result = repository.findAll();
-        if (result.isEmpty()) {
-            throw new EmptyResultException();
-        }
+    public List<Assignment> findByActiveTrue() throws EmptyResultException {
+        List<Assignment> result = repository.findByActiveTrue();
+        if (result.isEmpty()) throw new EmptyResultException();
         return result;
     }
 
@@ -35,23 +33,15 @@ public class AssignmentService {
 
     @Transactional
     public Assignment save(@NotNull Assignment entity) {
-        try {
-            return repository.save(entity);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while saving the entity.", e);
-        }
+        return repository.save(entity);
     }
 
     @Transactional
     public Assignment update(@NotNull AssignmentCommand command) {
-        try {
-            Assignment assignment = repository.findById(command.getAssignmentId()).orElseThrow(() -> new EmptyResultException());
-            assignment.setName(command.getName());
-            assignment.setPermissions(command.getPermissions());
-            return repository.save(assignment);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while updating the entity.", e);
-        }
+        Assignment assignment = repository.findById(command.getAssignmentId()).orElseThrow();
+        assignment.setName(command.getName());
+        assignment.setPermissions(command.getPermissions());
+        return repository.save(assignment);
     }
 
 }
