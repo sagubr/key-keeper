@@ -10,6 +10,7 @@ import io.micronaut.data.exceptions.EmptyResultException;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Singleton;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +30,8 @@ public class PermissionService {
     @ReadOnly
     @Transactional
     @Cacheable("permission-cache")
-    public List<Permission> findAll() throws EmptyResultException {
-        List<Permission> result = repository.findAll();
-        if (result.isEmpty()) {
-            throw new EmptyResultException();
-        }
-        return result;
+    public List<Permission> findAll() {
+        return repository.findByActiveTrue();
     }
 
     @ReadOnly
@@ -47,21 +44,18 @@ public class PermissionService {
     @Transactional
     @CacheInvalidate(value = "permission-cache", all = true)
     public Permission save(@NotNull Permission entity) {
-        try {
-            return repository.save(entity);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while saving the entity.", e);
-        }
+         return repository.save(entity);
     }
 
     @Transactional
     @CacheInvalidate(value = "permission-cache", all = true)
-    public void deleteById(@NotBlank @NotNull UUID id) {
-        try {
-            repository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while deleting the record with ID: " + id, e);
-        }
+    public Permission deleteById(@NotBlank @NotNull UUID id) {
+        return repository.findById(id)
+                .map(existing -> {
+                    existing.setActive(false);
+                    return repository.update(existing);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Permissão não encontrada na base de dados."));
     }
 
     @Transactional
@@ -77,11 +71,16 @@ public class PermissionService {
     @Transactional
     @CacheInvalidate(value = "permission-cache", all = true)
     public Permission update(@NotNull Permission entity) {
-        try {
-            return repository.update(entity);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while updating the entity.", e);
-        }
+        return repository.findById(entity.getId())
+                .map(existing -> {
+                    existing.setDescription(entity.getDescription());
+                    existing.setStartDateTime(entity.getStartDateTime());
+                    existing.setEndDateTime(entity.getEndDateTime());
+                    existing.setRequesters(entity.getRequesters());
+                    existing.setLocations(entity.getLocations());
+                    return repository.update(existing);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Permissão não encontrada na base de dados."));
     }
 
     @Transactional

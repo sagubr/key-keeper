@@ -1,7 +1,10 @@
 package github.sagubr.jobs;
 
+import github.sagubr.commands.ReservationChangeStatusCommand;
+import github.sagubr.commands.ReservationCommand;
 import github.sagubr.entities.Notification;
 import github.sagubr.entities.Reservation;
+import github.sagubr.entities.Status;
 import github.sagubr.notifications.NotifierEventPublisher;
 import github.sagubr.services.NotificationService;
 import github.sagubr.services.ReservationService;
@@ -33,13 +36,15 @@ public class ReservationJob {
     }
 
     private void handleOverdueNotification(Reservation reservation) {
+        ReservationChangeStatusCommand command = new ReservationChangeStatusCommand(reservation.getId(), Status.ATRASADO);
+        reservationService.changeStatus(command);
 
         if (!notificationService.findByReservationId(reservation.getId()).isEmpty()) return;
 
         Notification notification = createOverdueNotification(reservation);
 
         notificationService.save(notification);
-        reservationService.notificationTrue(reservation.getId());
+        reservationService.setNotificationTrue(reservation.getId());
         log.info("Publicando notificação de reserva atrasada.");
         publisher.publish(notification);
     }

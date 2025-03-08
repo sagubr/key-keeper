@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Error;
 import io.micronaut.http.annotation.Produces;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 
 import java.util.NoSuchElementException;
 
@@ -46,6 +47,20 @@ public class GlobalErrorController {
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<ApiError> handleIllegalStateException(IllegalStateException exception) {
         ApiError apiError = new ApiError("IllegalStateException", exception.getMessage());
+        return HttpResponse.badRequest(apiError);
+    }
+
+    @Error(global = true)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse<ApiError> handleIllegalArgumentException(IllegalArgumentException exception) {
+        ApiError apiError = new ApiError("IllegalArgumentException", exception.getMessage());
+        return HttpResponse.badRequest(apiError);
+    }
+
+    @Error(global = true)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse<ApiError> handleConstraintViolationException(ConstraintViolationException exception) {
+        ApiError apiError = new ApiError("ConstraintViolationException", exception.getMessage());
         return HttpResponse.badRequest(apiError);
     }
 

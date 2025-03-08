@@ -66,7 +66,7 @@ public class PermissionController {
     @Operation(summary = "Excluir permissão por ID")
     @DefaultResponses
     @Delete("/{id}")
-    public void deleteByIdPermission(@PathVariable @NotBlank @NotNull UUID id) {
+    public void deleteByIdPermission(@PathVariable @NotNull UUID id) {
         service.deleteById(id);
     }
 

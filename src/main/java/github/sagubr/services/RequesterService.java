@@ -8,6 +8,7 @@ import io.micronaut.data.exceptions.EmptyResultException;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Singleton;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -46,11 +47,20 @@ public class RequesterService {
     @Transactional
     @CacheInvalidate(value = "requesters", all = true)
     public Requester update(Requester entity) {
-        try {
-            return repository.update(entity);
-        } catch (Exception e) {
-            throw new RuntimeException("An error occurred while updating the entity.", e);
-        }
+        return repository.findById(entity.getId())
+                .map(existing -> {
+                    existing.setName(entity.getName());
+                    existing.setRegister(entity.getRegister());
+                    existing.setJobTitle(entity.getJobTitle());
+                    existing.setResponsible(entity.isResponsible());
+                    existing.setBlocked(entity.isBlocked());
+
+                    existing.getEmails().clear();
+                    existing.getEmails().addAll(entity.getEmails());
+
+                    return repository.update(existing);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Solicitante não encontrado na base de dados."));
     }
 
     @Transactional

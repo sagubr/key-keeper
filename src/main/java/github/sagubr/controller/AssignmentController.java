@@ -4,10 +4,7 @@ import github.sagubr.annotations.DefaultResponses;
 import github.sagubr.commands.AssignmentCommand;
 import github.sagubr.entities.Assignment;
 import github.sagubr.services.AssignmentService;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,7 +38,7 @@ public class AssignmentController {
 
     @Operation(summary = "Criar novo registro na classe atribuição")
     @DefaultResponses
-    @Post(value = "/update")
+    @Put(value = "/update")
     public Assignment updateAssignment(@Body @Valid AssignmentCommand command) {
         return service.update(command);
     }

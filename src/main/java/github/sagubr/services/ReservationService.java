@@ -100,18 +100,22 @@ public class ReservationService {
     @Transactional
     @CacheInvalidate(value = "reservations", all = true)
     public Reservation update(ReservationProlongationCommand command) {
-        Reservation reservation = repository.findById(command.getReservationId()).orElseThrow();
-        reservation.setStartDateTime(command.getStartDateTime());
-        reservation.setEndDateTime(command.getEndDateTime());
-        return repository.save(reservation);
+        return repository.findById(command.getReservationId())
+                .map(existing -> {
+                    existing.setStartDateTime(command.getStartDateTime());
+                    existing.setEndDateTime(command.getEndDateTime());
+                    if (!existing.isOverdue()) existing.setStatus(Status.EMPRESTIMO);
+
+                    return repository.update(existing);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Solicitante não encontrado na base de dados."));
     }
 
     @Transactional
     @CacheInvalidate(value = "reservations", all = true)
-    public Reservation notificationTrue(UUID reservationId) {
+    public Reservation setNotificationTrue(UUID reservationId) {
         Reservation reservation = repository.findById(reservationId).orElseThrow();
         reservation.setNotification(true);
-        reservation.setStatus(Status.ATRASADO);
         return repository.save(reservation);
     }
 

@@ -15,6 +15,8 @@ public interface PermissionRepository extends JpaRepository<Permission, UUID> {
 
     List<Permission> findByRequestersId(UUID id);
 
+    List<Permission> findByActiveTrue();
+
     List<Permission> findByRequestersIdAndEndDateTimeAfterAndActiveTrue(UUID requestersId, ZonedDateTime now);
 
 }
